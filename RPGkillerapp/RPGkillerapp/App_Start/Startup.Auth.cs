@@ -5,9 +5,9 @@ using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.Google;
 using Owin;
-using AspKillerapp.Models;
+using RPGkillerapp.Models;
 
-namespace AspKillerapp
+namespace RPGkillerapp
 {
     public partial class Startup
     {

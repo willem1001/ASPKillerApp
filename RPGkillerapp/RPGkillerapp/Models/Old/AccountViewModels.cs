@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace AspKillerapp.Models
+namespace RPGkillerapp.Models
 {
     public class ExternalLoginConfirmationViewModel
     {

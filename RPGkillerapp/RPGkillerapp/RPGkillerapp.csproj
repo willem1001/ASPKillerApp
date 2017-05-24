@@ -9,12 +9,12 @@
     <ProductVersion>
     </ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{34DA5708-9F52-469B-969A-127EA959696F}</ProjectGuid>
+    <ProjectGuid>{6BF60191-FD57-4A60-9DBC-2295D958379D}</ProjectGuid>
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>AspKillerapp</RootNamespace>
-    <AssemblyName>AspKillerapp</AssemblyName>
+    <RootNamespace>RPGkillerapp</RootNamespace>
+    <AssemblyName>RPGkillerapp</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
@@ -164,16 +164,26 @@
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\Data\Database.cs" />
-    <Compile Include="Models\Data\IPlayer.cs" />
-    <Compile Include="Models\Logic\PlayerRepo.cs" />
-    <Compile Include="Models\Query%27s\PlayerQ.cs" />
+    <Compile Include="Models\ClassSelect.cs" />
+    <Compile Include="Models\Database.cs" />
+    <Compile Include="Models\GameText.cs" />
+    <Compile Include="Models\IPlayer.cs" />
+    <Compile Include="Models\Old\AccountViewModels.cs" />
+    <Compile Include="Models\Old\IdentityModels.cs" />
+    <Compile Include="Models\Old\ManageViewModels.cs" />
+    <Compile Include="Models\PlayerQuery.cs" />
+    <Compile Include="Models\PlayerRepo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
@@ -205,27 +215,35 @@
     </Content>
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Shared\Error.cshtml" />
-    <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
-    <Content Include="Views\Account\ConfirmEmail.cshtml" />
-    <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
-    <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
-    <Content Include="Views\Account\ForgotPassword.cshtml" />
-    <Content Include="Views\Account\ForgotPasswordConfirmation.cshtml" />
-    <Content Include="Views\Account\Login.cshtml" />
-    <Content Include="Views\Account\Register.cshtml" />
-    <Content Include="Views\Account\ResetPassword.cshtml" />
-    <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
-    <Content Include="Views\Account\SendCode.cshtml" />
-    <Content Include="Views\Account\VerifyCode.cshtml" />
-    <Content Include="Views\Manage\Index.cshtml" />
-    <Content Include="Views\Shared\Lockout.cshtml" />
+    <Content Include="Views\Old\Account\_ExternalLoginsListPartial.cshtml" />
+    <Content Include="Views\Old\Account\ConfirmEmail.cshtml" />
+    <Content Include="Views\Old\Account\ExternalLoginConfirmation.cshtml" />
+    <Content Include="Views\Old\Account\ExternalLoginFailure.cshtml" />
+    <Content Include="Views\Old\Account\ForgotPassword.cshtml" />
+    <Content Include="Views\Old\Account\ForgotPasswordConfirmation.cshtml" />
+    <Content Include="Views\Old\Account\Login.cshtml" />
+    <Content Include="Views\Old\Account\Register.cshtml" />
+    <Content Include="Views\Old\Account\ResetPassword.cshtml" />
+    <Content Include="Views\Old\Account\ResetPasswordConfirmation.cshtml" />
+    <Content Include="Views\Old\Account\SendCode.cshtml" />
+    <Content Include="Views\Old\Account\VerifyCode.cshtml" />
+    <Content Include="Views\Old\Manage\AddPhoneNumber.cshtml" />
+    <Content Include="Views\Old\Manage\ChangePassword.cshtml" />
+    <Content Include="Views\Old\Manage\Index.cshtml" />
+    <Content Include="Views\Old\Manage\ManageLogins.cshtml" />
+    <Content Include="Views\Old\Manage\SetPassword.cshtml" />
+    <Content Include="Views\Old\Manage\VerifyPhoneNumber.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\Lockout.cshtml" />
+    <Content Include="Views\Home\PlayerSelect.cshtml" />
+    <Content Include="Views\Home\GameScreen.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\SelectPlayer\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -237,7 +255,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ClassLibrary\ClassLibrary.csproj">
-      <Project>{7a4c623f-c7c1-4c36-bf60-2af87321d287}</Project>
+      <Project>{d9c325e8-434d-4222-8d72-8c08408769ff}</Project>
       <Name>ClassLibrary</Name>
     </ProjectReference>
   </ItemGroup>
@@ -257,9 +275,9 @@
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>23190</DevelopmentServerPort>
+          <DevelopmentServerPort>19949</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:23190/</IISUrl>
+          <IISUrl>http://localhost:19949/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

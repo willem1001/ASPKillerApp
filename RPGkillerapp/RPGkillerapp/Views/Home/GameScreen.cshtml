@@ -1,0 +1,22 @@
+﻿@using RPGkillerapp.Models
+@model GameText
+@{
+    ViewBag.Title = "GameScreen";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div>
+    <style>
+        ul {
+            display: table;
+            padding-left: 500px;
+        }
+    </style>
+    <ul>
+        @foreach (string text in new GameText().AddText())
+        {
+            <li>@text</li>
+        }
+    </ul>
+</div>

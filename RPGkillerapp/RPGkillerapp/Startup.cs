@@ -1,8 +1,8 @@
 ﻿using Microsoft.Owin;
 using Owin;
 
-[assembly: OwinStartupAttribute(typeof(AspKillerapp.Startup))]
-namespace AspKillerapp
+[assembly: OwinStartupAttribute(typeof(RPGkillerapp.Startup))]
+namespace RPGkillerapp
 {
     public partial class Startup
     {
