@@ -15,6 +15,7 @@ namespace RPGkillerapp.Controllers
         public static GameText GameText;
         public static Player CurrentPlayer;
         public static Room CurrenRoom;
+        public static Enemy CurrentEnemy;
         
 
         
@@ -34,18 +35,34 @@ namespace RPGkillerapp.Controllers
             return GameText.OldText;
         }
 
+        public List<Item> InventoryItems()
+        {
+            return new PlayerRepo(new PlayerQuery()).PlayerInventory(CurrentPlayer.Id);
+        }
+
+        public List<int> PlayerEquipment()
+        {
+            return new PlayerRepo(new PlayerQuery()).PlayerEquipment(CurrentPlayer.Id);
+        }
+
 
         [HttpPost]
+        public ActionResult ReturnToGamescreen()
+        {
+            return View("GameScreen");
+        }
+
+
         public ActionResult Nextroom()
         {
-            if (CurrenRoom.Enemy == null)
+            if (CurrentEnemy == null)
             {
                 CurrenRoom = new GameRepo(new GameQuery()).Nextroom(CurrentPlayer.Level);
                 GameText.AddText(CurrentPlayer.Name + " entered a " + CurrenRoom.Name);
                 if (CurrenRoom.Random >= CurrenRoom.EnemyChance)
                 {
-                    CurrenRoom.Enemy = new GameRepo(new GameQuery()).Enemy(CurrentPlayer.Level);
-                    GameText.AddText("a " + CurrenRoom.Enemy.Name + " appeared in the " + CurrenRoom.Name);
+                    CurrentEnemy = new GameRepo(new GameQuery()).Enemy(CurrentPlayer.Level);
+                    GameText.AddText("a " + CurrentEnemy.Name + " appeared in the " + CurrenRoom.Name);
                 }
             }
             else
@@ -55,35 +72,40 @@ namespace RPGkillerapp.Controllers
             return View("GameScreen");
         }
 
+        public ActionResult Inventory()
+        {
+            return View();
+        }
+
         public ActionResult Attack()
         {
             if (CurrenRoom != null)
             {
-                if (CurrenRoom.Enemy != null)
+                if (CurrentEnemy != null)
                 {
-                    CurrentPlayer.Health = CurrentPlayer.Health - CurrenRoom.Enemy.Attack;
-                    CurrenRoom.Enemy.Health = CurrenRoom.Enemy.Health - CurrentPlayer.Attack;
+                    CurrentPlayer.Health = CurrentPlayer.Health - CurrentEnemy.Attack;
+                    CurrentEnemy.Health = CurrentEnemy.Health - CurrentPlayer.Attack;
 
-                    GameText.AddText(CurrentPlayer.Name + " Attacked " + CurrenRoom.Enemy.Name + " for " +
+                    GameText.AddText(CurrentPlayer.Name + " Attacked " + CurrentEnemy.Name + " for " +
                                      CurrentPlayer.Attack + " damage");
-                    GameText.AddText(CurrenRoom.Enemy.Name + " Attacked " + CurrentPlayer.Name + " for " +
-                                     CurrenRoom.Enemy.Attack + " damage");
+                    GameText.AddText(CurrentEnemy.Name + " Attacked " + CurrentPlayer.Name + " for " +
+                                     CurrentEnemy.Attack + " damage");
 
                     new PlayerRepo(new PlayerQuery()).UpdatePlayer(CurrentPlayer);
 
-                    if (CurrenRoom.Enemy.Health <= 0)
+                    if (CurrentEnemy.Health <= 0)
                     {
                         
-                        GameText.AddText(CurrentPlayer.Name + " Defeated " + CurrenRoom.Enemy.Name + " And gained " + CurrenRoom.Enemy.ExperienceDrop + " experience");
-                        int enemyspawn = new GameRepo(new GameQuery()).EnemyDefeated(CurrenRoom.Enemy.Id, CurrentPlayer.Id);
+                        GameText.AddText(CurrentPlayer.Name + " Defeated " + CurrentEnemy.Name + " And gained " + CurrentEnemy.ExperienceDrop + " experience");
+                        int enemyspawn = new GameRepo(new GameQuery()).EnemyDefeated(CurrentEnemy.Id, CurrentPlayer.Id);
                         if (enemyspawn != 0 && new Random().Next(1,100) > 55)
                         {
-                            CurrenRoom.Enemy = new GameRepo(new GameQuery()).EnemybyId(enemyspawn);
-                            GameText.AddText("A " + CurrenRoom.Enemy.Name + "Jumps at you!");
+                            CurrentEnemy = new GameRepo(new GameQuery()).EnemybyId(enemyspawn);
+                            GameText.AddText("A " + CurrentEnemy.Name + "Jumps at you!");
                         }
                         else
                         {
-                            CurrenRoom.Enemy = null;
+                            CurrentEnemy = null;
                         }
                     }
                 }

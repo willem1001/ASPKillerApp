@@ -9,5 +9,7 @@ namespace RPGkillerapp.Models
         List<Player> GetAllPlayers();
         Player GetPlayer(int id);
         void UpdatePlayer(Player player);
+        List<Item> PlayerInventory(int playerid);
+        List<int> PlayerEquipment(int playerid);
     }
 }

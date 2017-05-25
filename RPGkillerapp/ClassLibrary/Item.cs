@@ -6,17 +6,13 @@ using System.Threading.Tasks;
 
 namespace ClassLibrary
 {
-    public class Room
+   public class Item
     {
         public int Id { get; set; }
-        public int RoomLevel { get; set; }
         public string Name { get; set; }
         public string Type { get; set; }
-        public int Random { get; set; }
-        public int EventChance { get; set; }
-        public int EnemyChance { get; set; }
-        public int TraderChance { get; set; }
-
+        public int Level { get; set; }
+        public int GoldValue { get; set; }
+        public int ItemAmount { get; set; }
     }
 }
-

@@ -84,6 +84,7 @@ namespace RPGkillerapp.Models
                 return player;
             }
         }
+
         public void UpdatePlayer(Player player)
         {
             string query = "update [Statistics] " +
@@ -98,6 +99,59 @@ namespace RPGkillerapp.Models
             cmd.Parameters.AddWithValue("@playermana", player.Mana);
             cmd.ExecuteNonQuery();
             Database.CloseConnection();
+        }
+
+        public List<Item> PlayerInventory(int playerid)
+        {
+            List<Item> items = new List<Item>();
+            string query =
+                "select Item.Id, Item.Gold, Item.[Name], Item.[Level], Item.[Type], ItemInventory.ItemCount from Player, Item " +
+                "inner join ItemInventory on Item.Id = ItemInventory.ItemId " +
+                "where ItemInventory.InventoryId = Player.InventoryId " +
+                "and Player.Id = @playerid";
+
+            SqlCommand cmd = new SqlCommand(query, Database.Connect());
+            cmd.Parameters.AddWithValue("@playerid", playerid);
+
+            using (SqlDataReader reader = cmd.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    Item item = new Item();
+                    item.Id = Convert.ToInt32(reader["Id"]);
+                    item.Name = Convert.ToString(reader["Name"]);
+                    item.Type = Convert.ToString(reader["Type"]);
+                    item.GoldValue = Convert.ToInt32(reader["Gold"]);
+                    item.Level = Convert.ToInt32(reader["Level"]);
+                    item.ItemAmount = Convert.ToInt32(reader["ItemCount"]);
+
+                    items.Add(item);
+                }
+            }
+            return items;
+        }
+
+        public List<int> PlayerEquipment(int playerid)
+        {
+            List<int> equipment = new List<int>();
+
+            string query = "Select Item.Id from item, Player " +
+                           "where Item.Id = Player.EquippedArmorId " +
+                           "or Item.Id = Player.EquippedShieldId " +
+                           "or Item.Id = Player.EquippedWeaponId " +
+                           "group by item.Id, Player.Id " +
+                           "having Player.Id = @playerid";
+
+            SqlCommand cmd = new SqlCommand(query, Database.Connect());
+            cmd.Parameters.AddWithValue("@playerid", playerid);
+            using (SqlDataReader reader = cmd.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    equipment.Add(Convert.ToInt32(reader["Id"]));
+                }
+            }
+            return equipment;
         }
     }
 }

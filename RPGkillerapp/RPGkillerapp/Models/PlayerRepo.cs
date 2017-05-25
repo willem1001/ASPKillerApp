@@ -36,5 +36,15 @@ namespace RPGkillerapp.Models
             Context.UpdatePlayer(player);
         }
 
+        public List<Item> PlayerInventory(int playerid)
+        {
+           return Context.PlayerInventory(playerid);
+        }
+
+        public List<int> PlayerEquipment(int playerid)
+        {
+            return Context.PlayerEquipment(playerid);
+        }
+
     }
 }
