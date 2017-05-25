@@ -246,6 +246,7 @@
     <Content Include="Views\Home\PlayerSelect.cshtml" />
     <Content Include="Views\Game\GameScreen.cshtml" />
     <Content Include="Views\Game\Inventory.cshtml" />
+    <Content Include="Views\Shared\_LayoutWithTop.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

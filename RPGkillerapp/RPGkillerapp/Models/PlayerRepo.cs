@@ -46,5 +46,10 @@ namespace RPGkillerapp.Models
             return Context.PlayerEquipment(playerid);
         }
 
+        public void EquipItem(int itemid, int playerid, string type)
+        {
+            Context.EquipItem(itemid, playerid, type);
+        }
+
     }
 }

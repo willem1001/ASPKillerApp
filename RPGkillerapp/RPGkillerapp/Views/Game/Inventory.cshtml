@@ -3,6 +3,7 @@
 
 @{
     ViewBag.Title = "Inventory";
+    Layout = "~/Views/Shared/_LayoutWithTop.cshtml";
 }
 
 <h2>Inventory</h2>
@@ -11,6 +12,13 @@
 {
     <input value="Return" , type="submit" />
 }
+
+@Html.Label("Name: " + GameController.CurrentPlayer.Name)
+@Html.Label("Health: " + GameController.CurrentPlayer.Health + "/" + GameController.CurrentPlayer.MaxHealth)
+@Html.Label("Mana: " + GameController.CurrentPlayer.Mana + "/" + GameController.CurrentPlayer.MaxMana)
+@Html.Label("Defence: " + GameController.CurrentPlayer.Defence)
+@Html.Label("Attack: " + GameController.CurrentPlayer.Attack)
+@Html.Label("Level: " + GameController.CurrentPlayer.Level)
 
 <table style="width:50%">
     <tr>
@@ -25,7 +33,7 @@
     @foreach (Item item in ((GameController)ViewContext.Controller).InventoryItems())
     {
         <tr>
-            <td>@item.Name</td>
+            <td>@Html.ActionLink(@item.Name, "EquipItem", "Game", new { ItemId = item.Id.ToString(), ItemType = item.Type }, null)</td>
             <td>@item.Type</td>
             <td>@item.Level</td>
             <td>@item.GoldValue</td>

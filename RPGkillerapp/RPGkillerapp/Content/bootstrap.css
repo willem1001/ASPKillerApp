@@ -187,7 +187,7 @@ input[type="submit"] {
 
     button[disabled],
     html input[disabled] {
-        cursor: default;
+        cursor: default
     }
 
 input[type="checkbox"],
@@ -4418,10 +4418,12 @@ textarea.input-group-sm > .input-group-btn > .btn {
 }
 
 .navbar-nav {
-    margin: 7.5px -15px;
+   
+    margin: 7.5px -15px;   
+    
 }
-
     .navbar-nav > li > a {
+        
         padding-top: 10px;
         padding-bottom: 10px;
         line-height: 20px;

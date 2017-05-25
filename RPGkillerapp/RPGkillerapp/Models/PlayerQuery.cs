@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Web;
 using ClassLibrary;
 
@@ -17,6 +18,7 @@ namespace RPGkillerapp.Models
             cmd.Parameters.AddWithValue("@Name", name);
             cmd.Parameters.AddWithValue("@Classes", classes);
             cmd.ExecuteNonQuery();
+            Database.CloseConnection();
         }
 
         public List<Player> GetAllPlayers()
@@ -38,8 +40,9 @@ namespace RPGkillerapp.Models
 
                     players.Add(player);
                 }
-
+                Database.CloseConnection();
                 return players;
+
             }
 
         }
@@ -81,6 +84,7 @@ namespace RPGkillerapp.Models
                     player.MaxMana = reader.GetInt32(15);
                     player.Classes = reader.GetString(16);
                 }
+                Database.CloseConnection();
                 return player;
             }
         }
@@ -128,6 +132,7 @@ namespace RPGkillerapp.Models
                     items.Add(item);
                 }
             }
+            Database.CloseConnection();
             return items;
         }
 
@@ -151,7 +156,100 @@ namespace RPGkillerapp.Models
                     equipment.Add(Convert.ToInt32(reader["Id"]));
                 }
             }
+            Database.CloseConnection();
             return equipment;
+        }
+
+        public void EquipItem(int itemid, int playerid, string type)
+        {
+            string query = "";
+            if (type == "Consumable")
+            {
+                query = "update [Statistics] " +
+                        "set Health += " +
+                        "(select HealthRestore from Consumable " +
+                        "inner join item on Item.Id = Consumable.Id " +
+                        "where Item.Id = @itemid) " +
+                        ", Mana += isnull(( " +
+                        "select ManaRestore from Consumable " +
+                        "inner join item on Item.Id = Consumable.Id " +
+                        "where Item.Id = @itemid), 0) " +
+
+
+                        "where[Statistics].Id = (select Player.StatisticsId from Player where Player.Id = @playerid) " +
+
+                        "update ItemInventory " +
+                        "set ItemCount = ItemCount - 1 " +
+                        "where ItemId = " +
+                        "(select item.Id from Item " +
+                        "where Item.Id = @itemid)" +
+                        "and ItemInventory.InventoryId = (select InventoryId from Player where Player.Id = @playerid)";
+                try
+                {
+                    SqlCommand cmd = new SqlCommand(query, Database.Connect());
+                    cmd.Parameters.AddWithValue("@itemid", itemid);
+                    cmd.Parameters.AddWithValue("@playerid", playerid);
+                    cmd.ExecuteNonQuery();
+                    Database.CloseConnection();
+
+                }
+                catch (SqlException)
+                {
+                    query = "update [Statistics] " +
+                            "set Health = MaxHealth " +
+                            "where [Statistics].Id = (select Player.StatisticsId from Player where Player.Id = @playerid)" +
+
+                            "update ItemInventory " +
+                            "set ItemCount = ItemCount - 1 " +
+                            "where ItemId = " +
+                            "(select item.Id from Item " +
+                            "where Item.Id = @itemid)" +
+                            "and ItemInventory.InventoryId = (select InventoryId from Player where Player.Id = @playerid)";
+
+                    SqlCommand cmd = new SqlCommand(query, Database.Connect());
+                    cmd.Parameters.AddWithValue("@itemid", itemid);
+                    cmd.Parameters.AddWithValue("@playerid", playerid);
+                    cmd.ExecuteNonQuery();
+                    Database.CloseConnection();
+                }
+            }
+            else
+            {
+
+                if (type == "Armor")
+                {
+                    query = "update Player " +
+                            "set EquippedArmorId = " +
+                            "(select Armour.Id from Armour " +
+                            "inner join Item on Item.Id = Armour.Id " +
+                            "where Item.Id = @itemid) " +
+                            "where Player.Id = @playerid";
+                }
+                else if (type == "Weapon")
+                {
+                    query = "update Player " +
+                            "set EquippedWeaponId = " +
+                            "(select Weapon.Id from Weapon " +
+                            "inner join Item on Item.Id = Weapon.Id " +
+                            "where Item.Id = @itemid) " +
+                            "where Player.Id = @playerid";
+                }
+                else if (type == "Shield")
+                {
+                    query = "update Player " +
+                            "set EquippedShieldId = " +
+                            "(select Shield.Id from Shield " +
+                            "inner join Item on Item.Id = Shield.Id " +
+                            "where Item.Id = @itemid) " +
+                            "where Player.Id = @playerId";
+
+                }
+                SqlCommand cmd = new SqlCommand(query, Database.Connect());
+                cmd.Parameters.AddWithValue("@itemid", itemid);
+                cmd.Parameters.AddWithValue("@playerid", playerid);
+                cmd.ExecuteNonQuery();
+                Database.CloseConnection();
+            }
         }
     }
 }

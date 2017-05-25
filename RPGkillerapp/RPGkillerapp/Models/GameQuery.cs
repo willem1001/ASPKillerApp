@@ -30,6 +30,7 @@ namespace RPGkillerapp.Models
                     room.EventChance = Convert.ToInt32(reader["EventChance"]);
                     room.TraderChance = Convert.ToInt32(reader["TraderChance"]);
                 }
+                Database.CloseConnection();
                 return room;
             }
         }
@@ -65,6 +66,7 @@ namespace RPGkillerapp.Models
                     enemy.ExperienceDrop = reader.GetInt32(12);
                     enemy.Id = reader.GetInt32(13);
                 }
+                Database.CloseConnection();
                 return enemy;
             }
         }
@@ -100,6 +102,7 @@ namespace RPGkillerapp.Models
                     enemy.ExperienceDrop = reader.GetInt32(12);
                     enemy.Id = reader.GetInt32(13);
                 }
+                Database.CloseConnection();
                 return enemy;
             }
         }
@@ -117,9 +120,8 @@ namespace RPGkillerapp.Models
                 {
                     return Convert.ToInt32(reader["id"]);
                 }
+                Database.CloseConnection();
                 return 0;
-
-
             }
         }
     }

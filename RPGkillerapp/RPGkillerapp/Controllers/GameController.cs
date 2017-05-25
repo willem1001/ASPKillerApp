@@ -45,6 +45,16 @@ namespace RPGkillerapp.Controllers
             return new PlayerRepo(new PlayerQuery()).PlayerEquipment(CurrentPlayer.Id);
         }
 
+        public ActionResult EquipItem()
+        {
+            int itemid = int.Parse(Request.QueryString["ItemId"]);
+            string itemtype = Request.QueryString["ItemType"];
+            new PlayerRepo(new PlayerQuery()).EquipItem(itemid, CurrentPlayer.Id, itemtype);
+            CurrentPlayer = new PlayerRepo(new PlayerQuery()).GetPlayer(CurrentPlayer.Id);
+            return View("Inventory");
+
+        }
+
 
         [HttpPost]
         public ActionResult ReturnToGamescreen()

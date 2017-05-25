@@ -5,8 +5,14 @@
 @model List<string>
 @{
     ViewBag.Title = "GameScreen";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_LayoutWithTop.cshtml";
 }
+
+
+
+
+
+
 
 @using (Html.BeginForm("Nextroom", "Game", FormMethod.Post))
 {
