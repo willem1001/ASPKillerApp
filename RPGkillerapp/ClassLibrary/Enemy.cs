@@ -10,5 +10,6 @@ namespace ClassLibrary
     {
         public int AbilityChance { get; set; }
         public int ExperienceDrop { get; set; }
+
     }
 }

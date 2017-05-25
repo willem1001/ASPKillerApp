@@ -27,10 +27,18 @@ namespace RPGkillerapp.Models
 
         public void AddText(string add)
         {
+
+            
             List<string> text = new List<string>();
             text = OldText;
             text.Add(add);
             OldText = text;
+
+            while (OldText.Count >= 30)
+            {
+                OldText.RemoveAt(0);
+            }
+
             
         }
 

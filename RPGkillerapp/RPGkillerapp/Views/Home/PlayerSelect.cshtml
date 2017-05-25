@@ -3,22 +3,22 @@
 @using ClassLibrary
 @using RPGkillerapp.Models
 
-    @{
-        ViewBag.Title = "PlayerSelect";
-    }
+@{
+    ViewBag.Title = "PlayerSelect";
+}
 
 <h2>PlayerSelect</h2>
 
-<ul> 
+<ul>
     @foreach (Player player in new PlayerRepo(new PlayerQuery()).GetAllPlayers())
     {
-        <li>           
-            @Html.ActionLink((@player.Name + " as a " + @player.Classes), "GameScreen", "Game", new {name = player.Name, id = player.Id}, null);           
+        <li>
+            @Html.ActionLink((@player.Name + " as a " + @player.Classes), "GameScreen", "Game", new { playerid = player.Id.ToString() }, null)
         </li>
-            }
+    }
 </ul>
 
 @using (Html.BeginForm("Index", "Home"))
-    {
-        <input type = "submit", value="Create player"/>
-    }
+{
+    <input type="submit" , value="Create player" />
+}

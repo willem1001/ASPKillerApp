@@ -18,5 +18,20 @@ namespace RPGkillerapp.Models
         {
             return Context.NextRoom(playerlevel);
         }
+
+        public Enemy Enemy(int playerlevel)
+        {
+            return Context.Enemy(playerlevel);
+        }
+
+        public int EnemyDefeated(int enemyid, int playerid)
+        {
+           return Context.EnemyDefeated(enemyid, playerid);
+        }
+
+        public Enemy EnemybyId(int enemyId)
+        {
+            return Context.EnemybyId(enemyId);
+        }
     }
 }

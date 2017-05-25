@@ -31,5 +31,10 @@ namespace RPGkillerapp.Models
             return Context.GetPlayer(id);
         }
 
+        public void UpdatePlayer(Player player)
+        {
+            Context.UpdatePlayer(player);
+        }
+
     }
 }

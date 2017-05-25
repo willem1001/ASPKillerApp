@@ -84,5 +84,20 @@ namespace RPGkillerapp.Models
                 return player;
             }
         }
+        public void UpdatePlayer(Player player)
+        {
+            string query = "update [Statistics] " +
+                           "set Health = @playerhealth, Mana = @playermana " +
+                           "where [Statistics].Id = (select [Statistics].Id from Player " +
+                           "inner join [Statistics] on [Statistics].Id = Player.StatisticsId " +
+                           "where Player.Id = @playerid)";
+
+            SqlCommand cmd = new SqlCommand(query, Database.Connect());
+            cmd.Parameters.AddWithValue("@playerid", player.Id);
+            cmd.Parameters.AddWithValue("@playerhealth", player.Health);
+            cmd.Parameters.AddWithValue("@playermana", player.Mana);
+            cmd.ExecuteNonQuery();
+            Database.CloseConnection();
+        }
     }
 }

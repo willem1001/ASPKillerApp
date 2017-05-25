@@ -10,7 +10,12 @@
 
 @using (Html.BeginForm("Nextroom", "Game", FormMethod.Post))
 {
-    <input value="Attack", type="submit"/>
+    <input value="Next Room", type="submit"/>
+}
+
+@using (Html.BeginForm("Attack", "Game", FormMethod.Post))
+{
+    <input value="Attack" , type="submit" />
 }
 
 
