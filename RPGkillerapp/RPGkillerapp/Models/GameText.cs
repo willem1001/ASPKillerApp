@@ -10,20 +10,30 @@ namespace RPGkillerapp.Models
     {
         public List<string> OldText { get; set; }
 
-        public List<string> AddText()
+        public GameText()
+        {
+            if (OldText == null)
+            {
+                OldText = new List<string>();
+                OldText.Add("Hoi");
+            }
+        }
+
+        public void clear()
+        {
+            OldText.Clear();
+        }
+
+
+        public void AddText(string add)
         {
             List<string> text = new List<string>();
-            text.Add("Hoi");
-            text.Add("Doei");
-            return text;
+            text = OldText;
+            text.Add(add);
+            OldText = text;
+            
         }
 
-        public IEnumerable<SelectListItem> GetText
-        {
-            get { return new SelectList(AddText()); }
-        }
-
-        
 
     }
 }

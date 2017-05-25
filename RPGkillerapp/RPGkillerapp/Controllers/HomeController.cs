@@ -27,12 +27,6 @@ namespace RPGkillerapp.Controllers
             return View();
         }
 
-        public ActionResult GameScreen()
-        {
-            return View();
-        }
-       
-
         [HttpPost]
         public ActionResult NewPlayer(Player model)
         {

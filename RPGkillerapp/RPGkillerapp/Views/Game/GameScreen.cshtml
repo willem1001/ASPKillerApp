@@ -1,0 +1,28 @@
+﻿
+@using ClassLibrary
+@using RPGkillerapp.Controllers
+@using RPGkillerapp.Models
+@model List<string>
+@{
+    ViewBag.Title = "GameScreen";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm("Nextroom", "Game", FormMethod.Post))
+{
+    <input value="Attack", type="submit"/>
+}
+
+
+<style>
+    ul {
+        display: table;
+        padding-left: 500px;
+    }
+</style>
+    <ul>
+@foreach (string text in ((GameController)ViewContext.Controller).Text())
+{
+            <li>@text</li>
+}
+    </ul>

@@ -25,5 +25,11 @@ namespace RPGkillerapp.Models
         {
             return Context.GetAllPlayers();
         }
+
+        public Player GetPlayer(int id)
+        {
+            return Context.GetPlayer(id);
+        }
+
     }
 }

@@ -167,17 +167,22 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
-    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\GameController.cs" />
+    <Compile Include="Controllers\Old\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\Old\ManageController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\ClassSelect.cs" />
     <Compile Include="Models\Database.cs" />
+    <Compile Include="Models\GameRepo.cs" />
     <Compile Include="Models\GameText.cs" />
+    <Compile Include="Models\IGame.cs" />
     <Compile Include="Models\IPlayer.cs" />
     <Compile Include="Models\Old\AccountViewModels.cs" />
+    <Compile Include="Models\GameQuery.cs" />
+    <Compile Include="Models\Old\GameRepo.cs" />
     <Compile Include="Models\Old\IdentityModels.cs" />
     <Compile Include="Models\Old\ManageViewModels.cs" />
     <Compile Include="Models\PlayerQuery.cs" />
@@ -239,7 +244,7 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Home\PlayerSelect.cshtml" />
-    <Content Include="Views\Home\GameScreen.cshtml" />
+    <Content Include="Views\Game\GameScreen.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

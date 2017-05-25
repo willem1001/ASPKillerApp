@@ -7,5 +7,6 @@ namespace RPGkillerapp.Models
     {
        void NewPlayer(string name, string classes);
         List<Player> GetAllPlayers();
+        Player GetPlayer(int id);
     }
 }
