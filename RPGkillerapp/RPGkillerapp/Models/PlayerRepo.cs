@@ -51,5 +51,15 @@ namespace RPGkillerapp.Models
             Context.EquipItem(itemid, playerid, type);
         }
 
+        public List<Magic> PlayerMagic(int playerid)
+        {
+            return Context.PlayerMagic(playerid);
+        }
+
+        public int EquipedMagic(int playerid)
+        {
+            return Context.EquipedMagic(playerid);
+        }
+
     }
 }

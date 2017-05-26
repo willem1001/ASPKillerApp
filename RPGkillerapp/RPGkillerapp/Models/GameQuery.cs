@@ -12,7 +12,7 @@ namespace RPGkillerapp.Models
         public Room NextRoom(int playerlevel)
         {
             string query = "select top 1 * from Room " +
-                           "where Roomlevel between @playerlevel - 1 and @playerlevel + 1 " +
+                           "where Roomlevel = @playerlevel " +
                            "order by NEWID()";
 
             SqlCommand cmd = new SqlCommand(query, Database.Connect());

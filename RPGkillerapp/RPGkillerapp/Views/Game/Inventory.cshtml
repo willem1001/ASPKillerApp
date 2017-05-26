@@ -13,12 +13,6 @@
     <input value="Return" , type="submit" />
 }
 
-@Html.Label("Name: " + GameController.CurrentPlayer.Name)
-@Html.Label("Health: " + GameController.CurrentPlayer.Health + "/" + GameController.CurrentPlayer.MaxHealth)
-@Html.Label("Mana: " + GameController.CurrentPlayer.Mana + "/" + GameController.CurrentPlayer.MaxMana)
-@Html.Label("Defence: " + GameController.CurrentPlayer.Defence)
-@Html.Label("Attack: " + GameController.CurrentPlayer.Attack)
-@Html.Label("Level: " + GameController.CurrentPlayer.Level)
 
 <table style="width:50%">
     <tr>
@@ -44,6 +38,4 @@
             }
         </tr>
     }
-
-
 </table> 

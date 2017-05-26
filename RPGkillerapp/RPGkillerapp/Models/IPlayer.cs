@@ -12,5 +12,7 @@ namespace RPGkillerapp.Models
         List<Item> PlayerInventory(int playerid);
         List<int> PlayerEquipment(int playerid);
         void EquipItem(int itemid, int playerid, string type);
+        List<Magic> PlayerMagic(int playerid);
+        int EquipedMagic(int playerid);
     }
 }

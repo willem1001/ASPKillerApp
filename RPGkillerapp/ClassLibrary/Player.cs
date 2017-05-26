@@ -8,10 +8,9 @@ namespace ClassLibrary
 {
     public class Player : Statistics
     {
-        public string Name { get; set; }
         public string Classes { get; set; }
         public int Experience { get; set; }
-
-
+        public int UsedMagic { get; set; }
+        public List<Magic> CurrentMagic { get; set; }
     }
 }

@@ -247,6 +247,7 @@
     <Content Include="Views\Game\GameScreen.cshtml" />
     <Content Include="Views\Game\Inventory.cshtml" />
     <Content Include="Views\Shared\_LayoutWithTop.cshtml" />
+    <Content Include="Views\Game\Magic.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

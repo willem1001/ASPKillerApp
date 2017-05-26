@@ -8,12 +8,6 @@
     Layout = "~/Views/Shared/_LayoutWithTop.cshtml";
 }
 
-
-
-
-
-
-
 @using (Html.BeginForm("Nextroom", "Game", FormMethod.Post))
 {
     <input value="Next Room", type="submit"/>
@@ -24,10 +18,11 @@
     <input value="Attack" , type="submit" />
 }
 
-@using (Html.BeginForm("Inventory", "Game", FormMethod.Post))
+@using (Html.BeginForm("UseMagic", "Game", FormMethod.Post))
 {
-    <input value="Inventory" , type="submit" />
+    <input value="Magic" , type="submit" />
 }
+
 
 
 <style>

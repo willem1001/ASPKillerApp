@@ -1,0 +1,38 @@
+﻿@using ClassLibrary
+@using RPGkillerapp.Controllers
+
+@{
+    ViewBag.Title = "Inventory";
+    Layout = "~/Views/Shared/_LayoutWithTop.cshtml";
+}
+
+<h2>Magic</h2>
+
+@using (Html.BeginForm("ReturnToGamescreen", "Game", FormMethod.Post))
+{
+    <input value="Return" , type="submit" />
+}
+
+<table style="width:50%">
+    <tr>
+        <th>Name</th>
+        <th>Damage</th>
+        <th>Heal</th>
+        <th>Manacost</th>
+        <th>Equiped</th>
+    </tr>
+
+    @foreach (Magic magic in GameController.CurrentPlayer.CurrentMagic)
+    {
+        <tr>
+            <td>@Html.ActionLink(@magic.Name, "EquipMagic", "Game", new { MagicId = magic.Id.ToString()}, null)</td>
+            <td>@magic.Damage</td>
+            <td>@magic.HealthRestore</td>
+            <td>@magic.Manacost</td>
+            @if (GameController.CurrentPlayer.UsedMagic == (magic.Id))
+            {
+                <td>X</td>
+            }
+        </tr>
+    }
+</table> 
