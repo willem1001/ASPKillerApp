@@ -182,7 +182,6 @@
     <Compile Include="Models\IPlayer.cs" />
     <Compile Include="Models\Old\AccountViewModels.cs" />
     <Compile Include="Models\GameQuery.cs" />
-    <Compile Include="Models\Old\GameRepo.cs" />
     <Compile Include="Models\Old\IdentityModels.cs" />
     <Compile Include="Models\Old\ManageViewModels.cs" />
     <Compile Include="Models\PlayerQuery.cs" />

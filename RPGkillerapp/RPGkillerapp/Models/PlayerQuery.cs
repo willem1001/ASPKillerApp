@@ -42,9 +42,7 @@ namespace RPGkillerapp.Models
                 }
                 Database.CloseConnection();
                 return players;
-
             }
-
         }
 
         public Player GetPlayer(int id)
@@ -112,13 +110,10 @@ namespace RPGkillerapp.Models
         {
             List<Item> items = new List<Item>();
             string query =
-                "select Item.Id, Item.Gold, Item.[Name], Item.[Level], Item.[Type], ItemInventory.ItemCount from Player, Item " +
-                "inner join ItemInventory on Item.Id = ItemInventory.ItemId " +
-                "where ItemInventory.InventoryId = Player.InventoryId " +
-                "and Player.Id = @playerid";
+                "exec playerinventory @playerid = @Playerid";
 
             SqlCommand cmd = new SqlCommand(query, Database.Connect());
-            cmd.Parameters.AddWithValue("@playerid", playerid);
+            cmd.Parameters.AddWithValue("@Playerid", playerid);
 
             using (SqlDataReader reader = cmd.ExecuteReader())
             {
@@ -131,6 +126,12 @@ namespace RPGkillerapp.Models
                     item.GoldValue = Convert.ToInt32(reader["Gold"]);
                     item.Level = Convert.ToInt32(reader["Level"]);
                     item.ItemAmount = Convert.ToInt32(reader["ItemCount"]);
+                    item.Attack = Convert.ToInt32(reader["Attack"]);
+                    item.Bonushealth = Convert.ToInt32(reader["Health"]);
+                    item.CritChance = Convert.ToInt32(reader["CritChance"]);
+                    item.Defence = Convert.ToInt32(reader["Defence"]);
+                    item.Dodge = Convert.ToInt32(reader["Dodge"]);
+                    
 
                     items.Add(item);
                 }

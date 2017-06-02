@@ -11,7 +11,7 @@ namespace RPGkillerapp.Models
         static SqlConnection Connection;
         public static SqlConnection Connect()
         {
-            string Connectionstring = "Data Source=WILLEM_LAPTOP;Initial Catalog=KillerappGame;Integrated Security=True";
+            string Connectionstring = "Data Source=WILLEM_LAPTOP;Initial Catalog=KillerappGame;Integrated Security=True; Max Pool Size=5000;"; 
 
             try
             {

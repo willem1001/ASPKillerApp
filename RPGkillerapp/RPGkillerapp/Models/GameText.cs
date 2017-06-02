@@ -26,9 +26,7 @@ namespace RPGkillerapp.Models
 
 
         public void AddText(string add)
-        {
-
-            
+        {   
             List<string> text = new List<string>();
             text = OldText;
             text.Add(add);
@@ -38,10 +36,6 @@ namespace RPGkillerapp.Models
             {
                 OldText.RemoveAt(0);
             }
-
-            
         }
-
-
     }
 }

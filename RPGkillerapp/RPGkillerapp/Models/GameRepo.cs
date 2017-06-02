@@ -33,5 +33,15 @@ namespace RPGkillerapp.Models
         {
             return Context.EnemybyId(enemyId);
         }
+
+        public Item GetItem(int playerlevel)
+        {
+            return Context.Getitem(playerlevel);
+        }
+
+        public void SetItem(List<int> itemid, int playerid)
+        {
+            Context.Setitem(itemid, playerid);
+        }
     }
 }

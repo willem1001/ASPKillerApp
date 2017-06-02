@@ -27,6 +27,11 @@ namespace RPGkillerapp.Controllers
             return View();
         }
 
+        public List<Player> Allplayers()
+        {
+            return new PlayerRepo(new PlayerQuery()).GetAllPlayers();
+        }
+
         [HttpPost]
         public ActionResult NewPlayer(Player model)
         {

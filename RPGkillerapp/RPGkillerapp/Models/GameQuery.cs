@@ -124,5 +124,56 @@ namespace RPGkillerapp.Models
                 return 0;
             }
         }
+
+        public Item Getitem(int playerlevel)
+        {
+            string query = "exec GetItem @level = @playerlevel";
+            int currentplayerlevel = playerlevel;
+            Item item = new Item();
+
+            SqlCommand cmd = new SqlCommand(query, Database.Connect());
+            cmd.Parameters.AddWithValue("@playerlevel", currentplayerlevel);
+            using (SqlDataReader reader = cmd.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    item.Id = Convert.ToInt32(reader["id"]);
+                    item.Name = Convert.ToString(reader["name"]);
+                }
+            }
+            Database.CloseConnection();
+            while (item.Id == 0)
+            {
+                currentplayerlevel--;
+                query = "exec GetItem @level = @newplayerlevel";
+                cmd = new SqlCommand(query, Database.Connect());
+                cmd.Parameters.AddWithValue("@newplayerlevel", currentplayerlevel);
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        item.Id = Convert.ToInt32(reader["id"]);
+                        item.Name = Convert.ToString(reader["name"]);
+                    }
+                    Database.CloseConnection();
+                }
+            }
+            Database.CloseConnection();
+            return item;
+        }
+
+        public void Setitem(List<int> itemId, int playerid)
+        {
+
+            string query = "exec FoundItem @playerid = @Playerid, @itemid = @Itemid";
+            foreach (var currentitem in itemId)
+            {
+                SqlCommand cmd = new SqlCommand(query, Database.Connect());
+                cmd.Parameters.AddWithValue("@Playerid", playerid);
+                cmd.Parameters.AddWithValue("@Itemid", currentitem);
+                cmd.ExecuteNonQuery();
+            }
+        }
+
     }
 }

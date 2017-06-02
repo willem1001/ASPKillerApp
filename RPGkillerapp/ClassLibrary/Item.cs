@@ -14,5 +14,10 @@ namespace ClassLibrary
         public int Level { get; set; }
         public int GoldValue { get; set; }
         public int ItemAmount { get; set; }
+        public int Attack { get; set; }
+        public int Defence { get; set; }
+        public int Dodge { get; set; }
+        public int Bonushealth { get; set; }
+        public int CritChance { get; set; }
     }
 }

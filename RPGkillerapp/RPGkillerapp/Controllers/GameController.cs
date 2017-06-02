@@ -14,7 +14,7 @@ namespace RPGkillerapp.Controllers
     {
         public static GameText GameText;
         public static Player CurrentPlayer;
-        public static Room CurrenRoom;
+        public static Room CurrentRoom;
         public static Enemy CurrentEnemy;
 
 
@@ -73,6 +73,16 @@ namespace RPGkillerapp.Controllers
                 {
                     GameText.AddText(CurrentPlayer.Name + " Defeated " + CurrentEnemy.Name + " And gained " +
                                      CurrentEnemy.ExperienceDrop + " experience");
+
+                    List<int> items = new List<int>();
+                    Item item = g_repo.GetItem(CurrentPlayer.Level);
+
+                    GameText.AddText(CurrentEnemy.Name + " Dropped a " + item.Name);
+
+                    items.Add(item.Id);
+                    items.Add(200);
+                    g_repo.SetItem(items, CurrentPlayer.Id);
+
                     int enemyspawn = g_repo.EnemyDefeated(CurrentEnemy.Id, CurrentPlayer.Id);
                     if (enemyspawn != 0 && new Random().Next(1, 100) > 55)
                     {
@@ -85,6 +95,11 @@ namespace RPGkillerapp.Controllers
                     }
                 }
             }
+        }
+
+        public void FoundItem()
+        {
+
         }
 
         [HttpPost]
@@ -104,24 +119,28 @@ namespace RPGkillerapp.Controllers
             GameRepo repo = new GameRepo(new GameQuery());
             if (CurrentEnemy == null)
             {
-                CurrenRoom = null;
+                CurrentRoom = null;
                 int roomlevel = new Random().Next(1, CurrentPlayer.Level);
-                CurrenRoom = repo.Nextroom(roomlevel);
+                CurrentRoom = repo.Nextroom(roomlevel);
 
-                if (CurrenRoom.Id == 0)
+                if (CurrentRoom.Id == 0)
                 {
-                    while (CurrenRoom.Id == 0)
+                    while (CurrentRoom.Id == 0)
                     {
                         roomlevel--;
-                        CurrenRoom = repo.Nextroom(roomlevel);
+                        CurrentRoom = repo.Nextroom(roomlevel);
 
                     }
                 }
-                GameText.AddText(CurrentPlayer.Name + " entered a " + CurrenRoom.Name);
-                if (CurrenRoom.Random >= CurrenRoom.EnemyChance)
+                GameText.AddText(CurrentPlayer.Name + " entered a " + CurrentRoom.Name);
+                if (CurrentRoom.Random >= CurrentRoom.EnemyChance)
                 {
                     CurrentEnemy = repo.Enemy(roomlevel);
-                    GameText.AddText("a " + CurrentEnemy.Name + " appeared in the " + CurrenRoom.Name);
+                    GameText.AddText("a " + CurrentEnemy.Name + " appeared in the " + CurrentRoom.Name);
+                }
+                else if (CurrentRoom.Random >= CurrentRoom.TraderChance)
+                {
+                    
                 }
             }
             else
@@ -200,17 +219,40 @@ namespace RPGkillerapp.Controllers
 
         public ActionResult Attack()
         {
-            if (CurrenRoom != null)
+            if (CurrentRoom != null)
             {
                 if (CurrentEnemy != null)
                 {
-                    CurrentPlayer.Health -= CurrentEnemy.Attack;
-                    CurrentEnemy.Health -= CurrentPlayer.Attack;
+                    Random random = new Random();
+                    int enemyattack = Convert.ToInt32(Math.Round(Convert.ToDouble(CurrentEnemy.Attack - (CurrentPlayer.Defence / 2)), 0)) ;
+                    if (enemyattack < 0)
+                    {
+                        enemyattack = 0;
+                    }
 
-                    GameText.AddText(CurrentPlayer.Name + " Attacked " + CurrentEnemy.Name + " for " +
-                                     CurrentPlayer.Attack + " damage");
-                    GameText.AddText(CurrentEnemy.Name + " Attacked " + CurrentPlayer.Name + " for " +
-                                     CurrentEnemy.Attack + " damage");
+                    CurrentPlayer.Health -= enemyattack;
+                    int rand = random.Next(1, 101);
+                    int playerattack = CurrentPlayer.Attack;
+                    if (CurrentPlayer.CritChance > rand)
+                    {
+                        playerattack = (playerattack * 2);
+                        GameText.AddText("Critical hit!");
+                        GameText.AddText(CurrentPlayer.Name + " Attacked " + CurrentEnemy.Name + " for " + playerattack + " damage");
+                    }
+                    else
+                    {
+                        GameText.AddText(CurrentPlayer.Name + " Attacked " + CurrentEnemy.Name + " for " + playerattack + " damage");
+                    }
+                    rand = random.Next(1, 101);
+                    if (CurrentPlayer.DodgeChance > rand)
+                    {
+                        GameText.AddText(CurrentEnemy.Name + " Attacked " + CurrentPlayer.Name + " but missed");
+                    }
+                    else
+                    {
+                        CurrentEnemy.Health -= CurrentPlayer.Attack;
+                        GameText.AddText(CurrentEnemy.Name + " Attacked " + CurrentPlayer.Name + " for " + enemyattack + " damage");
+                    }                   
                 }
                 else
                 {

@@ -14,13 +14,18 @@
 }
 
 
-<table style="width:50%">
+<table class="table table-condensed" style="width: 100%">
     <tr>
         <th>Name</th>
         <th>Type</th>
         <th>Level</th>
         <th>Value</th>
         <th>Amount</th>
+        <th>Attack</th>
+        <th>CritChance</th>
+        <th>BonusHealth</th>
+        <th>Defence</th>
+        <th>DodgeChance</th>
         <th>Equiped</th>
     </tr>
 
@@ -32,9 +37,53 @@
             <td>@item.Level</td>
             <td>@item.GoldValue</td>
             <td>@item.ItemAmount</td>
+            @if (@item.Attack != 0)
+            {
+                <td>@item.Attack</td>
+            }
+            else
+            {
+                <td> </td>
+            }
+            @if (@item.CritChance != 0)
+            {
+                <td>@item.CritChance</td>
+            }
+            else
+            {
+                <td> </td>
+            }
+            @if (@item.Bonushealth != 0)
+            {
+                <td>@item.Bonushealth</td>
+            }
+            else
+            {
+                <td> </td>
+            }
+            @if (@item.Defence != 0)
+            {
+                <td>@item.Defence</td>
+            }
+            else
+            {
+                <td> </td>
+            }
+            @if (@item.Dodge != 0)
+            {
+                <td>@item.Dodge</td>
+            }
+            else
+            {
+                <td> </td>
+            }
             @if (((GameController)ViewContext.Controller).PlayerEquipment().Contains(item.Id))
             {
                 <td>X</td>
+            }
+            else
+            {
+                <td> </td>
             }
         </tr>
     }
