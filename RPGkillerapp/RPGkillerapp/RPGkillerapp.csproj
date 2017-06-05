@@ -175,6 +175,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\ClassSelect.cs" />
+    <Compile Include="Models\Current.cs" />
     <Compile Include="Models\Database.cs" />
     <Compile Include="Models\GameRepo.cs" />
     <Compile Include="Models\GameText.cs" />
@@ -247,6 +248,7 @@
     <Content Include="Views\Game\Inventory.cshtml" />
     <Content Include="Views\Shared\_LayoutWithTop.cshtml" />
     <Content Include="Views\Game\Magic.cshtml" />
+    <Content Include="Views\Game\Trader.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

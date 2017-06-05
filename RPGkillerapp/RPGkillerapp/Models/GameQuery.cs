@@ -175,5 +175,88 @@ namespace RPGkillerapp.Models
             }
         }
 
+        public List<Item> TraderItems(int traderid, bool update)
+        {
+            if (update)
+            {
+                string query = "exec RefreshTrader @traderid= @TraderId";
+                List<Item> traderItems = new List<Item>();
+                SqlCommand cmd = new SqlCommand(query, Database.Connect());
+                cmd.Parameters.AddWithValue("@TraderId", traderid);
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        Item item = new Item();
+                        item.Id = Convert.ToInt32(reader["Id"]);
+                        item.Name = Convert.ToString(reader["Name"]);
+                        item.Type = Convert.ToString(reader["Type"]);
+                        item.GoldValue = Convert.ToInt32(reader["Gold"]);
+                        item.GoldCost = Convert.ToInt32(reader["GoldCost"]);
+                        item.Level = Convert.ToInt32(reader["Level"]);
+                        item.ItemAmount = Convert.ToInt32(reader["ItemCount"]);
+                        item.Attack = Convert.ToInt32(reader["Attack"]);
+                        item.Bonushealth = Convert.ToInt32(reader["Health"]);
+                        item.CritChance = Convert.ToInt32(reader["CritChance"]);
+                        item.Defence = Convert.ToInt32(reader["Defence"]);
+                        item.Dodge = Convert.ToInt32(reader["Dodge"]);
+
+                        traderItems.Add(item);
+                    }
+                }
+                return traderItems;
+
+            }
+            else
+            {
+                string query = "exec TraderItems @traderid = @TraderId";
+                List<Item> traderItems = new List<Item>();
+                SqlCommand cmd = new SqlCommand(query, Database.Connect());
+                cmd.Parameters.AddWithValue("@TraderId", traderid);
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        Item item = new Item();
+                        item.Id = Convert.ToInt32(reader["Id"]);
+                        item.Name = Convert.ToString(reader["Name"]);
+                        item.Type = Convert.ToString(reader["Type"]);
+                        item.GoldValue = Convert.ToInt32(reader["Gold"]);
+                        item.GoldCost = Convert.ToInt32(reader["GoldCost"]);
+                        item.Level = Convert.ToInt32(reader["Level"]);
+                        item.ItemAmount = Convert.ToInt32(reader["ItemCount"]);
+                        item.Attack = Convert.ToInt32(reader["Attack"]);
+                        item.Bonushealth = Convert.ToInt32(reader["Health"]);
+                        item.CritChance = Convert.ToInt32(reader["CritChance"]);
+                        item.Defence = Convert.ToInt32(reader["Defence"]);
+                        item.Dodge = Convert.ToInt32(reader["Dodge"]);
+
+                        traderItems.Add(item);
+                    }
+                }
+                return traderItems;
+            }
+        }
+
+        public void Sellitem(int traderid, int playerid, int itemid)
+        {
+            string query = "Exec Sellitem @traderid = @TraderId, @playerid = @PlayerId, @itemid = @ItemId";
+            SqlCommand cmd = new SqlCommand(query, Database.Connect());
+            cmd.Parameters.AddWithValue("@TraderId", traderid);
+            cmd.Parameters.AddWithValue("@PlayerId", playerid);
+            cmd.Parameters.AddWithValue("@ItemId", itemid);
+            cmd.ExecuteNonQuery();
+        }
+
+        public void Buyitem(int traderid, int playerid, int itemid)
+        {
+            string query = "Exec Buyitem @traderid = @TraderId, @playerid = @PlayerId, @itemid = @ItemId";
+            SqlCommand cmd = new SqlCommand(query, Database.Connect());
+            cmd.Parameters.AddWithValue("@TraderId", traderid);
+            cmd.Parameters.AddWithValue("@PlayerId", playerid);
+            cmd.Parameters.AddWithValue("@ItemId", itemid);
+            cmd.ExecuteNonQuery();
+        }
+
     }
 }

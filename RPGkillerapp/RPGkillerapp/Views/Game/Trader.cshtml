@@ -1,0 +1,159 @@
+﻿@using ClassLibrary
+@using RPGkillerapp.Controllers
+
+@{
+    ViewBag.Title = "Trader";
+}
+
+<h2>Trader</h2>
+
+@using (Html.BeginForm("ReturnToGamescreen", "Game", FormMethod.Post))
+{
+    <input value="Return" , type="submit" />
+}
+
+@if (!GameController.Current.Gold)
+{
+    @Html.Label("Not enough gold to buy this item") <br/>
+}
+@Html.Label("Gold: " +  GameController.Current.CurrentPlayer.Gold.ToString())
+
+<table class="table table-condensed" style="width: 100%">
+    <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Level</th>
+        <th>Value</th>
+        <th>Amount</th>
+        <th>Attack</th>
+        <th>CritChance</th>
+        <th>BonusHealth</th>
+        <th>Defence</th>
+        <th>DodgeChance</th>
+        <th>Equiped</th>
+    </tr>
+
+    @foreach (Item item in GameController.Current.InventoryItems())
+    {
+        <tr>
+            <td>@Html.ActionLink(@item.Name, "Sellitem", "Game", new { ItemId = item.Id.ToString()}, null)</td>
+            <td>@item.Type</td>
+            <td>@item.Level</td>
+            <td>@item.GoldValue</td>
+            <td>@item.ItemAmount</td>
+            @if (@item.Attack != 0)
+            {
+                <td>@item.Attack</td>
+            }
+            else
+            {
+                <td> </td>
+            }
+            @if (@item.CritChance != 0)
+            {
+                <td>@item.CritChance</td>
+            }
+            else
+            {
+                <td> </td>
+            }
+            @if (@item.Bonushealth != 0)
+            {
+                <td>@item.Bonushealth</td>
+            }
+            else
+            {
+                <td> </td>
+            }
+            @if (@item.Defence != 0)
+            {
+                <td>@item.Defence</td>
+            }
+            else
+            {
+                <td> </td>
+            }
+            @if (@item.Dodge != 0)
+            {
+                <td>@item.Dodge</td>
+            }
+            else
+            {
+                <td> </td>
+            }
+            @if (GameController.Current.PlayerEquipment().Contains(item.Id))
+            {
+                <td>X</td>
+            }
+            else
+            {
+                <td> </td>
+            }
+        </tr>
+    }
+</table>
+
+<table class="table table-condensed" style="width: 100%">
+    <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Level</th>
+        <th>Value</th>
+        <th>Amount</th>
+        <th>Attack</th>
+        <th>CritChance</th>
+        <th>BonusHealth</th>
+        <th>Defence</th>
+        <th>DodgeChance</th>
+    </tr>
+    @foreach (Item item in GameController.Current.TraderItems())
+    {
+        <tr>
+            <td>@Html.ActionLink(@item.Name, "Buyitem", "Game", new { ItemId = item.Id.ToString(), ItemCost = item.GoldCost}, null)</td>
+            <td>@item.Type</td>
+            <td>@item.Level</td>
+            <td>@item.GoldCost</td>
+            <td>@item.ItemAmount</td>
+            @if (@item.Attack != 0)
+                {
+                <td>@item.Attack</td>
+            }
+            else
+            {
+                <td> </td>
+            }
+            @if (@item.CritChance != 0)
+                {
+                <td>@item.CritChance</td>
+            }
+            else
+            {
+                <td> </td>
+            }
+            @if (@item.Bonushealth != 0)
+                {
+                <td>@item.Bonushealth</td>
+            }
+            else
+            {
+                <td> </td>
+            }
+            @if (@item.Defence != 0)
+                {
+                <td>@item.Defence</td>
+            }
+            else
+            {
+                <td> </td>
+            }
+            @if (@item.Dodge != 0)
+                {
+                <td>@item.Dodge</td>
+            }
+            else
+            {
+                <td> </td>
+            }
+        </tr>
+    }
+</table>

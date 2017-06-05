@@ -13,6 +13,7 @@ namespace ClassLibrary
         public string Type { get; set; }
         public int Level { get; set; }
         public int GoldValue { get; set; }
+        public int GoldCost { get; set; }
         public int ItemAmount { get; set; }
         public int Attack { get; set; }
         public int Defence { get; set; }

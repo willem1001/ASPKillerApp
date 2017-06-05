@@ -29,7 +29,7 @@
         <th>Equiped</th>
     </tr>
 
-    @foreach (Item item in ((GameController)ViewContext.Controller).InventoryItems())
+    @foreach (Item item in GameController.Current.InventoryItems())
     {
         <tr>
             <td>@Html.ActionLink(@item.Name, "EquipItem", "Game", new { ItemId = item.Id.ToString(), ItemType = item.Type }, null)</td>
@@ -77,7 +77,7 @@
             {
                 <td> </td>
             }
-            @if (((GameController)ViewContext.Controller).PlayerEquipment().Contains(item.Id))
+            @if (GameController.Current.PlayerEquipment().Contains(item.Id))
             {
                 <td>X</td>
             }

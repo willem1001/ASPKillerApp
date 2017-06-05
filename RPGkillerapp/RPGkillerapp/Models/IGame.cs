@@ -12,5 +12,8 @@ namespace RPGkillerapp.Models
         Enemy EnemybyId(int enemyId);
         Item Getitem(int playerlevel);
         void Setitem(List<int> itemid, int playerid);
+        List<Item> TraderItems(int traderid, bool update);
+        void Sellitem(int traderid, int playerid, int itemid);
+        void Buyitem(int traderid, int playerid, int itemid);
     }
 }

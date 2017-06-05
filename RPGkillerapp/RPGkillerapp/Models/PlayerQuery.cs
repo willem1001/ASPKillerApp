@@ -50,13 +50,13 @@ namespace RPGkillerapp.Models
             Player player = new Player();
 
             string query =
-                "select Player.Id, Player.[Name], Player.InventoryId, Player.RoomId, SUM(Weapon.Attack + [Statistics].Attack) as Attack, SUM(Armour.Defence + [Statistics].Defence + Shield.Defence) as Defence, sum([Statistics].MaxHealth + Armour.BonusHealth) as MaxHealth, [Statistics].HealthRegen, [Statistics].Mana, [Statistics].ManaRegen, [Statistics].[Level], [Statistics].Experience, [Statistics].CritChance, sum(Shield.DodgeChance + [Statistics].DodgeChance) as dodgechance, [Statistics].Health, [Statistics].MaxMana, Klasse from Player, [Statistics] ,Armour , Weapon, Shield " +
+                "select Player.Id, Player.[Name], Player.InventoryId, Player.RoomId, SUM(Weapon.Attack + [Statistics].Attack) as Attack, SUM(Armour.Defence + [Statistics].Defence + Shield.Defence) as Defence, sum([Statistics].MaxHealth + Armour.BonusHealth) as MaxHealth, [Statistics].HealthRegen, [Statistics].Mana, [Statistics].ManaRegen, [Statistics].[Level], [Statistics].Experience, [Statistics].CritChance, sum(Shield.DodgeChance + [Statistics].DodgeChance) as dodgechance, [Statistics].Health, [Statistics].MaxMana, Klasse, Gold from Player, [Statistics] ,Armour , Weapon, Shield " +
                 "where Player.Id = @playerId " +
                 "and[Statistics].Id = Player.StatisticsId " +
                 "and Armour.Id = EquippedArmorId " +
                 "and Weapon.Id = EquippedWeaponId " +
                 "and Shield.Id = EquippedShieldId " +
-                "Group by Player.Id, Player.[Name], Player.InventoryId, Player.RoomId, [Statistics].HealthRegen, [Statistics].Mana, [Statistics].ManaRegen, [Statistics].[Level], [Statistics].Experience, [Statistics].CritChance, [Statistics].Health, [Statistics].MaxMana, Klasse " +
+                "Group by Player.Id, Player.[Name], Player.InventoryId, Player.RoomId, [Statistics].HealthRegen, [Statistics].Mana, [Statistics].ManaRegen, [Statistics].[Level], [Statistics].Experience, [Statistics].CritChance, [Statistics].Health, [Statistics].MaxMana, Klasse, Gold " +
                 "Having sum([Statistics].MaxHealth + Armour.BonusHealth) >= Health";
             SqlCommand cmd = new SqlCommand(query, Database.Connect());
             cmd.Parameters.AddWithValue("@playerId", id);
@@ -81,6 +81,7 @@ namespace RPGkillerapp.Models
                     player.Health = reader.GetInt32(14);
                     player.MaxMana = reader.GetInt32(15);
                     player.Classes = reader.GetString(16);
+                    player.Gold = reader.GetInt32(17);
 
                 }
                 Database.CloseConnection();
@@ -124,6 +125,7 @@ namespace RPGkillerapp.Models
                     item.Name = Convert.ToString(reader["Name"]);
                     item.Type = Convert.ToString(reader["Type"]);
                     item.GoldValue = Convert.ToInt32(reader["Gold"]);
+                    item.GoldCost = Convert.ToInt32(reader["GoldCost"]);
                     item.Level = Convert.ToInt32(reader["Level"]);
                     item.ItemAmount = Convert.ToInt32(reader["ItemCount"]);
                     item.Attack = Convert.ToInt32(reader["Attack"]);

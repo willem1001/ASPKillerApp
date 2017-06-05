@@ -12,5 +12,6 @@ namespace ClassLibrary
         public int Experience { get; set; }
         public int UsedMagic { get; set; }
         public List<Magic> CurrentMagic { get; set; }
+        public int Gold { get; set; }
     }
 }

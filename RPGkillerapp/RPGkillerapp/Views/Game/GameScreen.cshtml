@@ -13,17 +13,28 @@
     <input value="Next Room", type="submit"/>
 }
 
-@using (Html.BeginForm("Attack", "Game", FormMethod.Post))
-{
-    <input value="Attack" , type="submit" />
-}
 
 @using (Html.BeginForm("UseMagic", "Game", FormMethod.Post))
 {
     <input value="Magic" , type="submit" />
 }
 
+@if (GameController.Current.CurrentEnemy != null)
+{
+    using (Html.BeginForm("Attack", "Game", FormMethod.Post))
+    {
+        <input value="Attack" , type="submit" />
+    }
 
+}
+
+@if (GameController.Current.Trader)
+{
+  using (Html.BeginForm("Trader", "Game", FormMethod.Post))
+  {
+    <input value="Trader" , type="submit" />
+  }
+}
 
 <style>
     ul {
@@ -32,7 +43,7 @@
     }
 </style>
     <ul>
-@foreach (string text in ((GameController)ViewContext.Controller).Text())
+@foreach (string text in GameController.Current.StoryText())
 {
             <li>@text</li>
 }

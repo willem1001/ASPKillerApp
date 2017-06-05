@@ -22,14 +22,14 @@
         <th>Equiped</th>
     </tr>
 
-    @foreach (Magic magic in GameController.CurrentPlayer.CurrentMagic)
+    @foreach (Magic magic in GameController.Current.CurrentPlayer.CurrentMagic)
     {
         <tr>
             <td>@Html.ActionLink(@magic.Name, "EquipMagic", "Game", new { MagicId = magic.Id.ToString()}, null)</td>
             <td>@magic.Damage</td>
             <td>@magic.HealthRestore</td>
             <td>@magic.Manacost</td>
-            @if (GameController.CurrentPlayer.UsedMagic == (magic.Id))
+            @if (GameController.Current.CurrentPlayer.UsedMagic == (magic.Id))
             {
                 <td>X</td>
             }

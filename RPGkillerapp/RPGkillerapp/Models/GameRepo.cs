@@ -43,5 +43,20 @@ namespace RPGkillerapp.Models
         {
             Context.Setitem(itemid, playerid);
         }
+
+        public List<Item> TraderItems(int traderid, bool update)
+        {
+            return Context.TraderItems(traderid, update);
+        }
+
+        public void Sellitem(int traderid, int playerid, int itemid)
+        {
+            Context.Sellitem(traderid, playerid, itemid);
+        }
+
+        public void Buyitem(int traderid, int playerid, int itemid)
+        {
+            Context.Buyitem(traderid, playerid, itemid);
+        }
     }
 }
