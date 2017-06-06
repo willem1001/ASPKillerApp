@@ -33,11 +33,7 @@ namespace RPGkillerapp.Models
             {
                 while (reader.Read())
                 {
-                    Player player = new Player();
-                    player.Classes = Convert.ToString(reader["Klasse"]);
-                    player.Id = Convert.ToInt32(reader["Id"]);
-                    player.Name = Convert.ToString(reader["Name"]);
-
+                    Player player = new Player(Convert.ToString(reader["Klasse"]), Convert.ToString(reader["Name"]), Convert.ToInt32(reader["Id"]));
                     players.Add(player);
                 }
                 Database.CloseConnection();
@@ -47,7 +43,7 @@ namespace RPGkillerapp.Models
 
         public Player GetPlayer(int id)
         {
-            Player player = new Player();
+            Player player = null;
 
             string query =
                 "select Player.Id, Player.[Name], Player.InventoryId, Player.RoomId, SUM(Weapon.Attack + [Statistics].Attack) as Attack, SUM(Armour.Defence + [Statistics].Defence + Shield.Defence) as Defence, sum([Statistics].MaxHealth + Armour.BonusHealth) as MaxHealth, [Statistics].HealthRegen, [Statistics].Mana, [Statistics].ManaRegen, [Statistics].[Level], [Statistics].Experience, [Statistics].CritChance, sum(Shield.DodgeChance + [Statistics].DodgeChance) as dodgechance, [Statistics].Health, [Statistics].MaxMana, Klasse, Gold from Player, [Statistics] ,Armour , Weapon, Shield " +
@@ -64,25 +60,7 @@ namespace RPGkillerapp.Models
             {
                 while (reader.Read())
                 {
-                    player.Id = reader.GetInt32(0);
-                    player.Name = reader.GetString(1);
-                    // inventory 2
-                    // room 3
-                    player.Attack = reader.GetInt32(4);
-                    player.Defence = reader.GetInt32(5);
-                    player.MaxHealth = reader.GetInt32(6);
-                    player.HealthRegen = reader.GetInt32(7);
-                    player.Mana = reader.GetInt32(8);
-                    player.ManaRegen = reader.GetInt32(9);
-                    player.Level = reader.GetInt32(10);
-                    player.Experience = reader.GetInt32(11);
-                    player.CritChance = reader.GetInt32(12);
-                    player.DodgeChance = reader.GetInt32(13);
-                    player.Health = reader.GetInt32(14);
-                    player.MaxMana = reader.GetInt32(15);
-                    player.Classes = reader.GetString(16);
-                    player.Gold = reader.GetInt32(17);
-
+                    player = new Player(reader.GetString(16), reader.GetInt32(11), reader.GetInt32(17), reader.GetInt32(0), reader.GetInt32(14), reader.GetInt32(8), reader.GetInt32(7), reader.GetInt32(9), reader.GetInt32(4), reader.GetInt32(5), reader.GetInt32(13), reader.GetInt32(12), reader.GetString(1), reader.GetInt32(10), reader.GetInt32(6), reader.GetInt32(15));
                 }
                 Database.CloseConnection();
                 return player;
@@ -120,21 +98,7 @@ namespace RPGkillerapp.Models
             {
                 while (reader.Read())
                 {
-                    Item item = new Item();
-                    item.Id = Convert.ToInt32(reader["Id"]);
-                    item.Name = Convert.ToString(reader["Name"]);
-                    item.Type = Convert.ToString(reader["Type"]);
-                    item.GoldValue = Convert.ToInt32(reader["Gold"]);
-                    item.GoldCost = Convert.ToInt32(reader["GoldCost"]);
-                    item.Level = Convert.ToInt32(reader["Level"]);
-                    item.ItemAmount = Convert.ToInt32(reader["ItemCount"]);
-                    item.Attack = Convert.ToInt32(reader["Attack"]);
-                    item.Bonushealth = Convert.ToInt32(reader["Health"]);
-                    item.CritChance = Convert.ToInt32(reader["CritChance"]);
-                    item.Defence = Convert.ToInt32(reader["Defence"]);
-                    item.Dodge = Convert.ToInt32(reader["Dodge"]);
-                    
-
+                    Item item = new Item(Convert.ToInt32(reader["Id"]), Convert.ToString(reader["Name"]), Convert.ToString(reader["Type"]), Convert.ToInt32(reader["Level"]), Convert.ToInt32(reader["Gold"]), Convert.ToInt32(reader["GoldCost"]), Convert.ToInt32(reader["ItemCount"]), Convert.ToInt32(reader["Attack"]), Convert.ToInt32(reader["Defence"]), Convert.ToInt32(reader["Dodge"]), Convert.ToInt32(reader["Health"]), Convert.ToInt32(reader["CritChance"]));
                     items.Add(item);
                 }
             }
@@ -198,10 +162,10 @@ namespace RPGkillerapp.Models
             if (type == "Consumable")
             {
                 query = "update [Statistics] " +
-                        "set Health += " +
-                        "(select HealthRestore from Consumable " +
+                        "set Health += isnull((" +
+                        "select HealthRestore from Consumable " +
                         "inner join item on Item.Id = Consumable.Id " +
-                        "where Item.Id = @itemid) " +
+                        "where Item.Id = @itemid), 0) " +
                         ", Mana += isnull(( " +
                         "select ManaRestore from Consumable " +
                         "inner join item on Item.Id = Consumable.Id " +

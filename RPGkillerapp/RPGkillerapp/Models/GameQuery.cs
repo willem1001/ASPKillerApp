@@ -37,7 +37,8 @@ namespace RPGkillerapp.Models
 
         public Enemy Enemy(int playerlevel)
         {
-            Enemy enemy = new Enemy();
+
+            Enemy enemy = null;
 
             string query =
                 "select Top 1 Enemy.[Name], [Statistics].Attack, [Statistics].Defence, [Statistics].Health, [Statistics].HealthRegen, [Statistics].Mana, [Statistics].ManaRegen, [Statistics].[Level], [Statistics].CritChance, [Statistics].DodgeChance, [Statistics].MaxHealth, [Statistics].MaxMana, Enemy.ExperienceDrop, Enemy.Id from Enemy " +
@@ -50,21 +51,8 @@ namespace RPGkillerapp.Models
             using (SqlDataReader reader = cmd.ExecuteReader())
             {
                 while (reader.Read())
-                {
-                    enemy.Name = reader.GetString(0);
-                    enemy.Attack = reader.GetInt32(1);
-                    enemy.Defence = reader.GetInt32(2);
-                    enemy.Health = reader.GetInt32(3);
-                    enemy.HealthRegen = reader.GetInt32(4);
-                    enemy.Mana = reader.GetInt32(5);
-                    enemy.ManaRegen = reader.GetInt32(6);
-                    enemy.Level = reader.GetInt32(7);
-                    enemy.CritChance = reader.GetInt32(8);
-                    enemy.DodgeChance = reader.GetInt32(9);
-                    enemy.MaxHealth = reader.GetInt32(10);
-                    enemy.MaxMana = reader.GetInt32(11);
-                    enemy.ExperienceDrop = reader.GetInt32(12);
-                    enemy.Id = reader.GetInt32(13);
+                {                   
+                    enemy = new Enemy(0, reader.GetInt32(12), reader.GetInt32(13), reader.GetInt32(3), reader.GetInt32(5), reader.GetInt32(4), reader.GetInt32(6), reader.GetInt32(1), reader.GetInt32(2), reader.GetInt32(9), reader.GetInt32(8), reader.GetString(0), reader.GetInt32(7), reader.GetInt32(10), reader.GetInt32(11));
                 }
                 Database.CloseConnection();
                 return enemy;
@@ -73,7 +61,7 @@ namespace RPGkillerapp.Models
 
         public Enemy EnemybyId(int enemyId)
         {
-            Enemy enemy = new Enemy();
+            Enemy enemy = null;
 
             string query =
                 "select Top 1 Enemy.[Name], [Statistics].Attack, [Statistics].Defence, [Statistics].Health, [Statistics].HealthRegen, [Statistics].Mana, [Statistics].ManaRegen, [Statistics].[Level], [Statistics].CritChance, [Statistics].DodgeChance, [Statistics].MaxHealth, [Statistics].MaxMana, Enemy.ExperienceDrop, Enemy.Id from Enemy " +
@@ -87,20 +75,7 @@ namespace RPGkillerapp.Models
             {
                 while (reader.Read())
                 {
-                    enemy.Name = reader.GetString(0);
-                    enemy.Attack = reader.GetInt32(1);
-                    enemy.Defence = reader.GetInt32(2);
-                    enemy.Health = reader.GetInt32(3);
-                    enemy.HealthRegen = reader.GetInt32(4);
-                    enemy.Mana = reader.GetInt32(5);
-                    enemy.ManaRegen = reader.GetInt32(6);
-                    enemy.Level = reader.GetInt32(7);
-                    enemy.CritChance = reader.GetInt32(8);
-                    enemy.DodgeChance = reader.GetInt32(9);
-                    enemy.MaxHealth = reader.GetInt32(10);
-                    enemy.MaxMana = reader.GetInt32(11);
-                    enemy.ExperienceDrop = reader.GetInt32(12);
-                    enemy.Id = reader.GetInt32(13);
+                    enemy = new Enemy(0, reader.GetInt32(12), reader.GetInt32(13), reader.GetInt32(3), reader.GetInt32(5), reader.GetInt32(4), reader.GetInt32(6), reader.GetInt32(1), reader.GetInt32(2), reader.GetInt32(9), reader.GetInt32(8), reader.GetString(0), reader.GetInt32(7), reader.GetInt32(10), reader.GetInt32(11));
                 }
                 Database.CloseConnection();
                 return enemy;
@@ -129,20 +104,19 @@ namespace RPGkillerapp.Models
         {
             string query = "exec GetItem @level = @playerlevel";
             int currentplayerlevel = playerlevel;
-            Item item = new Item();
 
+            Item item = null;
             SqlCommand cmd = new SqlCommand(query, Database.Connect());
             cmd.Parameters.AddWithValue("@playerlevel", currentplayerlevel);
             using (SqlDataReader reader = cmd.ExecuteReader())
             {
                 while (reader.Read())
                 {
-                    item.Id = Convert.ToInt32(reader["id"]);
-                    item.Name = Convert.ToString(reader["name"]);
+                    item = new Item(Convert.ToInt32(reader["id"]), Convert.ToString(reader["name"]));
                 }
             }
             Database.CloseConnection();
-            while (item.Id == 0)
+            while (item == null)
             {
                 currentplayerlevel--;
                 query = "exec GetItem @level = @newplayerlevel";
@@ -152,8 +126,7 @@ namespace RPGkillerapp.Models
                 {
                     while (reader.Read())
                     {
-                        item.Id = Convert.ToInt32(reader["id"]);
-                        item.Name = Convert.ToString(reader["name"]);
+                        item = new Item(Convert.ToInt32(reader["id"]), Convert.ToString(reader["name"]));
                     }
                     Database.CloseConnection();
                 }
@@ -187,20 +160,7 @@ namespace RPGkillerapp.Models
                 {
                     while (reader.Read())
                     {
-                        Item item = new Item();
-                        item.Id = Convert.ToInt32(reader["Id"]);
-                        item.Name = Convert.ToString(reader["Name"]);
-                        item.Type = Convert.ToString(reader["Type"]);
-                        item.GoldValue = Convert.ToInt32(reader["Gold"]);
-                        item.GoldCost = Convert.ToInt32(reader["GoldCost"]);
-                        item.Level = Convert.ToInt32(reader["Level"]);
-                        item.ItemAmount = Convert.ToInt32(reader["ItemCount"]);
-                        item.Attack = Convert.ToInt32(reader["Attack"]);
-                        item.Bonushealth = Convert.ToInt32(reader["Health"]);
-                        item.CritChance = Convert.ToInt32(reader["CritChance"]);
-                        item.Defence = Convert.ToInt32(reader["Defence"]);
-                        item.Dodge = Convert.ToInt32(reader["Dodge"]);
-
+                        Item item = new Item(Convert.ToInt32(reader["Id"]), Convert.ToString(reader["Name"]), Convert.ToString(reader["Type"]), Convert.ToInt32(reader["Level"]), Convert.ToInt32(reader["Gold"]), Convert.ToInt32(reader["GoldCost"]),  Convert.ToInt32(reader["ItemCount"]), Convert.ToInt32(reader["Attack"]), Convert.ToInt32(reader["Defence"]), Convert.ToInt32(reader["Dodge"]), Convert.ToInt32(reader["Health"]), Convert.ToInt32(reader["CritChance"]));
                         traderItems.Add(item);
                     }
                 }
@@ -217,20 +177,7 @@ namespace RPGkillerapp.Models
                 {
                     while (reader.Read())
                     {
-                        Item item = new Item();
-                        item.Id = Convert.ToInt32(reader["Id"]);
-                        item.Name = Convert.ToString(reader["Name"]);
-                        item.Type = Convert.ToString(reader["Type"]);
-                        item.GoldValue = Convert.ToInt32(reader["Gold"]);
-                        item.GoldCost = Convert.ToInt32(reader["GoldCost"]);
-                        item.Level = Convert.ToInt32(reader["Level"]);
-                        item.ItemAmount = Convert.ToInt32(reader["ItemCount"]);
-                        item.Attack = Convert.ToInt32(reader["Attack"]);
-                        item.Bonushealth = Convert.ToInt32(reader["Health"]);
-                        item.CritChance = Convert.ToInt32(reader["CritChance"]);
-                        item.Defence = Convert.ToInt32(reader["Defence"]);
-                        item.Dodge = Convert.ToInt32(reader["Dodge"]);
-
+                        Item item = new Item(Convert.ToInt32(reader["Id"]), Convert.ToString(reader["Name"]), Convert.ToString(reader["Type"]), Convert.ToInt32(reader["Level"]), Convert.ToInt32(reader["Gold"]), Convert.ToInt32(reader["GoldCost"]), Convert.ToInt32(reader["ItemCount"]), Convert.ToInt32(reader["Attack"]), Convert.ToInt32(reader["Defence"]), Convert.ToInt32(reader["Dodge"]), Convert.ToInt32(reader["Health"]), Convert.ToInt32(reader["CritChance"]));
                         traderItems.Add(item);
                     }
                 }

@@ -20,5 +20,27 @@ namespace ClassLibrary
         public int Dodge { get; set; }
         public int Bonushealth { get; set; }
         public int CritChance { get; set; }
+
+        public Item(int id, string name, string type, int level, int goldvalue, int goldcost, int itemamount, int attack, int defence, int dodge, int bonushealth, int crit)
+        {
+            this.Id = id;
+            this.Name = name;
+            this.Type = type;
+            this.Level = level;
+            this.GoldValue = goldvalue;
+            this.GoldCost = goldcost;
+            this.ItemAmount = itemamount;
+            this.Attack = attack;
+            this.Defence = defence;
+            this.Dodge = dodge;
+            this.Bonushealth = bonushealth;
+            this.CritChance = crit;
+        }
+
+        public Item(int id, string name)
+        {
+            this.Id = id;
+            this.Name = name;
+        }
     }
 }

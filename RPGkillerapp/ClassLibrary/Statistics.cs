@@ -21,5 +21,6 @@ namespace ClassLibrary
         public int Level { get; set; }
         public int MaxHealth { get; set; }
         public int MaxMana { get; set; }
+
     }
 }
