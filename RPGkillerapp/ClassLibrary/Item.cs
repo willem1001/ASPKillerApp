@@ -42,5 +42,15 @@ namespace ClassLibrary
             this.Id = id;
             this.Name = name;
         }
+
+        public Item(int id, string name, string type, int level, int goldvalue, int goldcost)
+        {
+            this.Id = id;
+            this.Name = name;
+            this.Type = type;
+            this.Level = level;
+            this.GoldValue = goldvalue;
+            this.GoldCost = goldcost;
+        }
     }
 }

@@ -15,5 +15,6 @@ namespace RPGkillerapp.Models
         List<Item> TraderItems(int traderid, bool update);
         void Sellitem(int traderid, int playerid, int itemid);
         void Buyitem(int traderid, int playerid, int itemid);
+        List<Item> Allitems();
     }
 }

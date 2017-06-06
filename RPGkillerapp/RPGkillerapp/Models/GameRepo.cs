@@ -58,5 +58,10 @@ namespace RPGkillerapp.Models
         {
             Context.Buyitem(traderid, playerid, itemid);
         }
+
+        public List<Item> Allitems()
+        {
+            return Context.Allitems();
+        }
     }
 }

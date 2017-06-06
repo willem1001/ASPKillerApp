@@ -205,5 +205,22 @@ namespace RPGkillerapp.Models
             cmd.ExecuteNonQuery();
         }
 
+        public List<Item> Allitems()
+        {
+            List<Item> allItems = new List<Item>();
+            string query = "select Item.Id, Item.[Name], Item.[Type], Item.Gold, Item.GoldCost, Item.[Level] from Item";
+
+            SqlCommand cmd = new SqlCommand(query, Database.Connect());
+            using (SqlDataReader reader = cmd.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    Item item = new Item(Convert.ToInt32(reader["Id"]), Convert.ToString(reader["Name"]), Convert.ToString(reader["Type"]), Convert.ToInt32(reader["Level"]), Convert.ToInt32(reader["Gold"]), Convert.ToInt32(reader["GoldCost"]));
+                    allItems.Add(item);
+                }
+            }
+            return allItems;
+        }
+
     }
 }
