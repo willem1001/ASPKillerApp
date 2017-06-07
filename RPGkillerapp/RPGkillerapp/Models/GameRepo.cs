@@ -63,5 +63,10 @@ namespace RPGkillerapp.Models
         {
             return Context.Allitems();
         }
+
+        public int ItemAmount(int playerid, int itemid)
+        {
+            return Context.ItemAmount(playerid, itemid);
+        }
     }
 }

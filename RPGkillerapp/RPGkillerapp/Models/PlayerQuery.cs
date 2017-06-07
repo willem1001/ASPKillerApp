@@ -149,7 +149,8 @@ namespace RPGkillerapp.Models
             {
                 while (reader.Read())
                 {
-                    equipment.Add(Convert.ToInt32(reader["Id"]));
+                    int id = Convert.ToInt32(reader["Id"]);
+                    equipment.Add(id);
                 }
             }
             Database.CloseConnection();
@@ -240,12 +241,12 @@ namespace RPGkillerapp.Models
             {
                 while (reader.Read())
                 {
-                    Magic magic = new Magic();
-                    magic.Id = Convert.ToInt32(reader["Id"]);
-                    magic.Name = Convert.ToString(reader["Name"]);
-                    magic.Damage = Convert.ToInt32(reader["Damage"]);
-                    magic.HealthRestore = Convert.ToInt32(reader["HealthRestore"]);
-                    magic.Manacost = Convert.ToInt32(reader["ManaCost"]);
+                    Magic magic = new Magic(Convert.ToInt32(reader["Id"]), Convert.ToString(reader["Name"]), Convert.ToInt32(reader["Damage"]), Convert.ToInt32(reader["HealthRestore"]), Convert.ToInt32(reader["ManaCost"]));
+                    //magic.Id = Convert.ToInt32(reader["Id"]);
+                    //magic.Name = Convert.ToString(reader["Name"]);
+                    //magic.Damage = Convert.ToInt32(reader["Damage"]);
+                    //magic.HealthRestore = Convert.ToInt32(reader["HealthRestore"]);
+                    //magic.Manacost = Convert.ToInt32(reader["ManaCost"]);
 
                     magiclist.Add(magic);
                 }

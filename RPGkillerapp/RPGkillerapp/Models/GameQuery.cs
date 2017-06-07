@@ -222,5 +222,25 @@ namespace RPGkillerapp.Models
             return allItems;
         }
 
+        public int ItemAmount(int playerid, int itemid)
+        {
+            int amount = 0;
+            string query = "select itemcount from iteminventory " +
+                           "where ItemId = @ItemId " +
+                           "and InventoryId = @PlayerId";
+
+            SqlCommand cmd = new SqlCommand(query, Database.Connect());
+            cmd.Parameters.AddWithValue("@ItemId", itemid);
+            cmd.Parameters.AddWithValue("@PlayerId", playerid);
+            using (SqlDataReader reader = cmd.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    amount = Convert.ToInt32(reader["itemcount"]);
+                }
+            }
+            return amount;
+        }
+
     }
 }

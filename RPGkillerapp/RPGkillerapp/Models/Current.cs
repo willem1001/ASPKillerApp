@@ -4,7 +4,10 @@ using System.Data.Entity.Migrations.Model;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Routing;
+using System.Web.UI.WebControls;
 using ClassLibrary;
+using RedirectToRouteResult = System.Web.Http.Results.RedirectToRouteResult;
 
 namespace RPGkillerapp.Models
 {
@@ -16,9 +19,12 @@ namespace RPGkillerapp.Models
         public GameText GameText { get; set; }
         public bool Trader { get; set; }
         public bool Gold { get; set; } = true;
+        public bool Isequiped { get; set; } = false;
+        public bool Dead { get; set; } = false;
 
         public void SetPlayer(int id)
         {
+            Dead = false;
             GameText = new GameText();
             PlayerRepo repo = new PlayerRepo(new PlayerQuery());
 
@@ -51,7 +57,9 @@ namespace RPGkillerapp.Models
 
         public void EquipMagic(int magicid)
         {
-            new PlayerRepo(new PlayerQuery()).EquipItem(magicid, CurrentPlayer.Id, "Magic");
+            PlayerRepo repo = new PlayerRepo(new PlayerQuery());
+            repo.EquipItem(magicid, CurrentPlayer.Id, "Magic");
+            SetPlayer(CurrentPlayer.Id);
         }
 
         public List<Item> TraderItems()
@@ -61,9 +69,31 @@ namespace RPGkillerapp.Models
 
         public void Sellitem(int itemid)
         {
-            new GameRepo(new GameQuery()).Sellitem(1, CurrentPlayer.Id, itemid);
-            SetPlayer(CurrentPlayer.Id);
-            Gold = true;
+            PlayerRepo repo = new PlayerRepo(new PlayerQuery());
+            GameRepo g_repo = new GameRepo(new GameQuery());
+
+
+            if (repo.PlayerEquipment(CurrentPlayer.Id).Contains(itemid))
+            {
+                if (g_repo.ItemAmount(CurrentPlayer.Id, itemid) > 1)
+                {
+                    g_repo.Sellitem(1, CurrentPlayer.Id, itemid);
+                    SetPlayer(CurrentPlayer.Id);
+                    Gold = true;
+                    Isequiped = false;
+                }
+                else
+                {
+                    Isequiped = true;
+                }
+            }
+            else
+            {
+                g_repo.Sellitem(1, CurrentPlayer.Id, itemid);
+                SetPlayer(CurrentPlayer.Id);
+                Gold = true;
+                Isequiped = false;
+            }
         }
 
         public void Buyitem(int itemid, int itemcost)
@@ -89,39 +119,47 @@ namespace RPGkillerapp.Models
 
         public void Endturn()
         {
-            PlayerRepo repo = new PlayerRepo(new PlayerQuery());
-            GameRepo g_repo = new GameRepo(new GameQuery());
-            CurrentPlayer.Mana += CurrentPlayer.ManaRegen;
-            CurrentPlayer.Health += CurrentPlayer.HealthRegen;
-            repo.UpdatePlayer(CurrentPlayer);
-            CurrentPlayer = repo.GetPlayer(CurrentPlayer.Id);
-            CurrentPlayer.UsedMagic = repo.EquipedMagic(CurrentPlayer.Id);
-            CurrentPlayer.CurrentMagic = repo.PlayerMagic(CurrentPlayer.Id);
-            if (CurrentEnemy != null)
+            if (CurrentPlayer.Health <= 0)
             {
-                if (CurrentEnemy.Health <= 0)
+                GameText.AddText("You Died");
+                Dead = true;
+            }
+            else
+            {
+                PlayerRepo repo = new PlayerRepo(new PlayerQuery());
+                GameRepo g_repo = new GameRepo(new GameQuery());
+                CurrentPlayer.Mana += CurrentPlayer.ManaRegen;
+                CurrentPlayer.Health += CurrentPlayer.HealthRegen;
+                repo.UpdatePlayer(CurrentPlayer);
+                CurrentPlayer = repo.GetPlayer(CurrentPlayer.Id);
+                CurrentPlayer.UsedMagic = repo.EquipedMagic(CurrentPlayer.Id);
+                CurrentPlayer.CurrentMagic = repo.PlayerMagic(CurrentPlayer.Id);
+                if (CurrentEnemy != null)
                 {
-                    GameText.AddText(CurrentPlayer.Name + " Defeated " + CurrentEnemy.Name + " And gained " +
-                                     CurrentEnemy.ExperienceDrop + " experience");
-
-                    List<int> items = new List<int>();
-                    Item item = g_repo.GetItem(CurrentPlayer.Level);
-
-                    GameText.AddText(CurrentEnemy.Name + " Dropped a " + item.Name);
-
-                    items.Add(item.Id);
-                    items.Add(200);
-                    g_repo.SetItem(items, CurrentPlayer.Id);
-
-                    int enemyspawn = g_repo.EnemyDefeated(CurrentEnemy.Id, CurrentPlayer.Id);
-                    if (enemyspawn != 0 && new Random().Next(1, 100) > 80)
+                    if (CurrentEnemy.Health <= 0)
                     {
-                        CurrentEnemy = g_repo.EnemybyId(enemyspawn);
-                        GameText.AddText("A " + CurrentEnemy.Name + "Jumps at you!");
-                    }
-                    else
-                    {
-                        CurrentEnemy = null;
+                        GameText.AddText(CurrentPlayer.Name + " Defeated " + CurrentEnemy.Name + " And gained " +
+                                         CurrentEnemy.ExperienceDrop + " experience");
+
+                        List<int> items = new List<int>();
+                        Item item = g_repo.GetItem(CurrentPlayer.Level);
+
+                        GameText.AddText(CurrentEnemy.Name + " Dropped a " + item.Name);
+
+                        items.Add(item.Id);
+                        items.Add(200);
+                        g_repo.SetItem(items, CurrentPlayer.Id);
+
+                        int enemyspawn = g_repo.EnemyDefeated(CurrentEnemy.Id, CurrentPlayer.Id);
+                        if (enemyspawn != 0 && new Random().Next(1, 100) > 80)
+                        {
+                            CurrentEnemy = g_repo.EnemybyId(enemyspawn);
+                            GameText.AddText("A " + CurrentEnemy.Name + "Jumps at you!");
+                        }
+                        else
+                        {
+                            CurrentEnemy = null;
+                        }
                     }
                 }
             }
@@ -196,7 +234,7 @@ namespace RPGkillerapp.Models
                                 if (magic.HealthRestore > 0)
                                 {
                                     GameText.AddText(CurrentPlayer.Name + " healed for " + magic.HealthRestore +
-                                                     "health");
+                                                     " health");
                                 }
 
                                 GameText.AddText(CurrentEnemy.Name + " Attacked " + CurrentPlayer.Name + " for " +
@@ -204,7 +242,7 @@ namespace RPGkillerapp.Models
                             }
                             else
                             {
-                                GameText.AddText("There is nothing to use magic on");
+                                GameText.AddText("There is nothing to use " + magic.Name + " on");
                             }
                         }
                         else

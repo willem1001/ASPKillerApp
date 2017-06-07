@@ -16,6 +16,10 @@
 {
     @Html.Label("Not enough gold to buy this item") <br/>
 }
+@if (GameController.Current.Isequiped)
+{
+    @Html.Label("You cannot sell your current equipment") <br />
+}
 @Html.Label("Gold: " +  GameController.Current.CurrentPlayer.Gold.ToString())
 
 <table class="table table-condensed" style="width: 100%">

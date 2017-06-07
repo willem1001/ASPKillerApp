@@ -7,35 +7,35 @@
     ViewBag.Title = "GameScreen";
     Layout = "~/Views/Shared/_LayoutWithTop.cshtml";
 }
-
-@using (Html.BeginForm("Nextroom", "Game", FormMethod.Post))
-{
-    <input value="Next Room", type="submit"/>
-}
-
-
-@using (Html.BeginForm("UseMagic", "Game", FormMethod.Post))
-{
-    <input value="Magic" , type="submit" />
-}
-
-@if (GameController.Current.CurrentEnemy != null)
-{
-    using (Html.BeginForm("Attack", "Game", FormMethod.Post))
+<div class="container">
+    @using (Html.BeginForm("Nextroom", "Game", FormMethod.Post))
     {
-        <input value="Attack" , type="submit" />
+        <input value="Next Room" , type="submit" style="float: left" class="btn btn-default" />
     }
 
-}
 
-@if (GameController.Current.Trader)
-{
-  using (Html.BeginForm("Trader", "Game", FormMethod.Post))
-  {
-    <input value="Trader" , type="submit" />
-  }
-}
+    @using (Html.BeginForm("UseMagic", "Game", FormMethod.Post))
+    {
+        <input value="Use Magic" , type="submit" style="float: left" class="btn btn-default" />
+    }
 
+    @if (GameController.Current.CurrentEnemy != null)
+    {
+        using (Html.BeginForm("Attack", "Game", FormMethod.Post))
+        {
+            <input value="Attack" , type="submit" style="float: left" class="btn btn-default" />
+        }
+
+    }
+
+    @if (GameController.Current.Trader)
+    {
+        using (Html.BeginForm("Trader", "Game", FormMethod.Post))
+        {
+            <input value="Trader" , type="submit" style="float: left" class="btn btn-default" />
+        }
+    }
+</div>
 <style>
     ul {
         display: table;
