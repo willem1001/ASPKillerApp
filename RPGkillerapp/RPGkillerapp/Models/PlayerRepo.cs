@@ -16,7 +16,7 @@ namespace RPGkillerapp.Models
             Context = context;
         }
 
-        public void NewPlayer(Player model)
+        public void NewPlayer(NewPlayer model)
         {
             Context.NewPlayer(model.Name, model.Classes);
         }

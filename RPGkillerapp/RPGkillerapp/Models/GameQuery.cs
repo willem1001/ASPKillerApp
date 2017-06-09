@@ -227,7 +227,7 @@ namespace RPGkillerapp.Models
             int amount = 0;
             string query = "select itemcount from iteminventory " +
                            "where ItemId = @ItemId " +
-                           "and InventoryId = @PlayerId";
+                           "and InventoryId = (select InventoryId from player where Player.Id = @PlayerId)";
 
             SqlCommand cmd = new SqlCommand(query, Database.Connect());
             cmd.Parameters.AddWithValue("@ItemId", itemid);

@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="ClassLibrary.Enemy">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAABAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Enemy.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ClassLibrary.Item">
+    <Position X="0.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACBAAgCgAAAAAAAAAAAAQAAIAAAAABAQAAAgACAAE=</HashCode>
+      <FileName>Item.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ClassLibrary.Magic">
+    <Position X="4.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAACAAAIAAAAAAAAAAAQAAAEAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Magic.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ClassLibrary.Player">
+    <Position X="4.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAABAAAAEAAAAAAAAAAAAAAAAAAAAAACAAAAAAQAE=</HashCode>
+      <FileName>Player.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ClassLibrary.Room">
+    <Position X="2.5" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAiAAAQAAAAAAAAABAAAAQAAAgABAAAAQAAAAAAAAA=</HashCode>
+      <FileName>Room.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ClassLibrary.Statistics">
+    <Position X="2.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACCAAAAAAQCAAAAAAAAAQACIAAAAAhAAAAIgAAAAE=</HashCode>
+      <FileName>Statistics.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ClassLibrary.NewPlayer">
+    <Position X="4.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAEAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>NewPlayer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

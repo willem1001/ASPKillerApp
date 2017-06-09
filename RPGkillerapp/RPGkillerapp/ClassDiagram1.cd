@@ -1,0 +1,97 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="RPGkillerapp.Controllers.GameController">
+    <Position X="1.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAEAAAKAAAAgAAQICAAAAAAIAAAAIAAAEgAgAAAAA=</HashCode>
+      <FileName>Controllers\GameController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RPGkillerapp.Controllers.HomeController">
+    <Position X="1.5" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAEkAAAAAAAAAAAAAAAAAgAAAAAAEAAAAAAAA=</HashCode>
+      <FileName>Controllers\HomeController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RPGkillerapp.Controllers.ItemController">
+    <Position X="3.25" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAACEAAAAAAAAAAAEAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Controllers\ItemController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RPGkillerapp.Models.ClassSelect">
+    <Position X="3.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACA=</HashCode>
+      <FileName>Models\ClassSelect.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RPGkillerapp.Models.Current">
+    <Position X="3.25" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAAACgKAAAAhAAQAQAAAAABYAAAAIAQgEgiAAAAAE=</HashCode>
+      <FileName>Models\Current.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RPGkillerapp.Models.Database">
+    <Position X="5" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAEAAAAAAJAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Database.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RPGkillerapp.Models.GameQuery" BaseTypeListCollapsed="true">
+    <Position X="8.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAESAAgAgAAAAAAAEAAAAAAAAAAQAgIAAAAAAA=</HashCode>
+      <FileName>Models\GameQuery.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="RPGkillerapp.Models.GameRepo">
+    <Position X="6.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAACgAgBkAAAAAAAEAAAAAAAAAAQAAoAAAAAAA=</HashCode>
+      <FileName>Models\GameRepo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RPGkillerapp.Models.GameText">
+    <Position X="1.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAAAAAAAAABAAAABAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\GameText.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RPGkillerapp.Models.PlayerQuery" BaseTypeListCollapsed="true">
+    <Position X="6.75" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BABAAAAAAgAgABAAAAEEAAAAAAAAQAAAAAAAAAEAAAA=</HashCode>
+      <FileName>Models\PlayerQuery.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="RPGkillerapp.Models.PlayerRepo">
+    <Position X="5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BABAAAAAAgAgABAAAAEEAAAAAAAAQAAAAAAAAAEAAAA=</HashCode>
+      <FileName>Models\PlayerRepo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="RPGkillerapp.Models.IGame">
+    <Position X="5" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAESAAgAgAAAAAAAEAAAAAAAAAAQAgIAAAAAAA=</HashCode>
+      <FileName>Models\IGame.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="RPGkillerapp.Models.IPlayer">
+    <Position X="8.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BABAAAAAAgAgABAAAAEEAAAAAAAAQAAAAAAAAAEAAAA=</HashCode>
+      <FileName>Models\IPlayer.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

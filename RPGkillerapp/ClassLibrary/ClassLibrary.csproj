@@ -43,10 +43,14 @@
     <Compile Include="Enemy.cs" />
     <Compile Include="Item.cs" />
     <Compile Include="Magic.cs" />
+    <Compile Include="NewPlayer.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Room.cs" />
     <Compile Include="Statistics.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
