@@ -7,7 +7,7 @@
     ViewBag.Title = "GameScreen";
     Layout = "~/Views/Shared/_LayoutWithTop.cshtml";
 }
-
+@if(GameController.Current.CurrentPlayer.Health > 0){ 
 <div class="container">
     @using (Html.BeginForm("Nextroom", "Game", FormMethod.Post))
     {
@@ -43,9 +43,14 @@
         padding-left: 500px;
     }
 </style>
-    <ul>
-@foreach (string text in GameController.Current.StoryText())
-{
-            <li>@text</li>
+<ul>
+    @foreach (string text in GameController.Current.StoryText())
+    {
+        <li>@text</li>
+    }
+</ul>
 }
-    </ul>
+else
+{
+   @Html.ActionLink(GameController.Current.CurrentPlayer.Name + " Died, return to playerselect", "PlayerSelect", "Home")
+}

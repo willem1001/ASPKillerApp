@@ -16,7 +16,7 @@
     <form>
         <div>
             @Html.Label("Name") <br />
-            @Html.TextBoxFor(model => Model.Name) <br />
+            @Html.TextBoxFor(model => Model.Name, new { @maxlength = "40"}) <br />
             @Html.Label("Class") <br />
             @Html.DropDownListFor(model => Model.Classes, ClassSelect.ClassesDropdown)<br /> <br />
 
